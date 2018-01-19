@@ -45,7 +45,8 @@
 	    },
 	    "pair": [
 		    {
-			    "id": "login"
+			    "id": "login",
+			    "template": "login_oauth2"
 		    },
 		    {
 			    "id": "list_devices",
