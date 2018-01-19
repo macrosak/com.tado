@@ -62,26 +62,6 @@
 			    "id": "add_devices",
 			    "template": "add_devices"
 		    }
-	    ],
-	    "settings": [
-              {
-                  "id": "username",
-                  "type": "text",
-                  "label": {
-                      "en": "Username",
-                      "nl": "Gebruikersnaam"
-                  },
-                  "value": ""
-              },
-              {
-                  "id": "password",
-                  "type": "password",
-                  "label": {
-                      "en": "Password",
-                      "nl": "Wachtwoord"
-                  },
-                  "value": ""
-              }
 	    ]
     }
   ],
