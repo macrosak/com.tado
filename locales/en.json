@@ -1,1 +1,18 @@
-{}
+{
+  "tado_user": "User for my.tado.com",
+  "tado_password": "Password",
+  
+  "night_clear": "Clear night",
+  "night_cloudy": "Cloudy night",
+  "cloudy": "Cloudy",
+  "cloudy_mostly": "Mostly cloudy",
+  "cloudy_partly": "Partly cloudy",
+  "foggy": "Foggy",
+  "drizzle": "Drizzle",
+  "scattered_rain": "Scattered rain",
+  "rain": "Rain",
+  "snow": "Snow",
+  "thunderstorms": "Thunderstorms",
+  "sun": "Sunny",
+  "windy": "Windy"
+}

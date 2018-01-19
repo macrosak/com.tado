@@ -23,34 +23,34 @@
 </style>
 
 <form class="tado-login">
-	
+
 	<div class="avatar"></div>
-	
+
 	<div class="form-group">
-		<label>Username</label>
-		<input type="text" name="username" value="" />
+		<label data-i18n="tado_user">Username</label>
+		<input type="text" name="username" value="you@email.com" />
 	</div>
-	
+
 	<div class="form-group">
-		<label>Password</label>
-		<input type="password" name="password" value="" />
+		<label data-i18n="tado_password">Password</label>
+		<input type="password" name="password" value="homeyhomey" />
 	</div>
-	
+
 	<div class="form-group align-center">
 		<input type="submit" value="Login" />
 	</div>
-	
+
 </form>
 
 <script type="text/javascript">
 $(function(){
-	
+
 	$('.tado-login').submit(function(e){
 		e.preventDefault();
-		
+
 		var username = $(this).find('[name="username"]').val();
 		var password = $(this).find('[name="password"]').val();
-		
+
 		Homey.emit('login', {
 			username: username,
 			password: password
@@ -58,9 +58,9 @@ $(function(){
 			if( err ) return Homey.alert( err.message || err.toString(), 'error' );
 			Homey.showView('list_devices');
 		})
-		
+
 		return false;
 	});
-	
+
 });
 </script>

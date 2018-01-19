@@ -1,0 +1,18 @@
+{
+  "tado_user": "Gebruiker voor my.tado.com",
+  "tado_password": "Wachtwoord",
+  
+  "night_clear": "Heldere nacht",
+  "night_cloudy": "Bewolkte nacht",
+  "cloudy": "Bewolkt",
+  "cloudy_mostly": "Overwegend bewolkt",
+  "cloudy_partly": "Deels bewolkt",
+  "foggy": "Mistig",
+  "drizzle": "Motregen",
+  "scattered_rain": "Af en toe buien",
+  "rain": "Regen",
+  "snow": "Sneeuw",
+  "thunderstorms": "Onweersbuien",
+  "sun": "Zonnig",
+  "windy": "Winderig"
+}

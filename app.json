@@ -1,82 +1,587 @@
 {
-    "id": "com.tado",
-    "sdk": 2,
-    "name": {
-        "en": "tado°"
-    },
-    "description": {
-        "en": "Adds support for Tado"
-    },
-    "category": "climate",
-    "version": "1.0.1",
-    "compatibility": ">=1.5.0",
-    "author": {
-        "name": "Athom B.V."
-    },
-    "images": {
-	    "large": "/assets/images/large.png",
-	    "small": "/assets/images/small.png"
-    },
-    "drivers": [
-	    {
-		    "id": "thermostat",
-		    "class": "thermostat",
-		    "capabilities": [ "measure_temperature", "measure_humidity", "target_temperature" ],
-		    "name": {
-			    "en": "Thermostat",
-			    "nl": "Thermostaat"
+  "id": "com.tado",
+  "sdk": 2,
+  "name": {
+      "en": "tado°"
+  },
+  "description": {
+      "en": "Adds support for tado°"
+  },
+  "category": "climate",
+  "version": "1.1.2",
+  "compatibility": ">=1.5.0",
+  "author": {
+      "name": "Athom B.V."
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Alex van den Berg",
+        "website": "https://github.com/OpenMindNL",
+        "email": "openmind_nl@hotmail.com"
+      }
+    ]
+  },
+  "images": {
+    "large": "/assets/images/large.png",
+    "small": "/assets/images/small.png"
+  },
+  "drivers": [
+    {
+	    "id": "thermostat",
+	    "class": "thermostat",
+	    "capabilities": [
+        "measure_temperature",
+        "measure_humidity",
+        "target_temperature"
+      ],
+	    "name": {
+		    "en": "Thermostat",
+		    "nl": "Thermostaat"
+	    },
+	    "images": {
+		    "large": "/drivers/thermostat/assets/images/large.png",
+		    "small": "/drivers/thermostat/assets/images/small.png"
+	    },
+	    "pair": [
+		    {
+			    "id": "login"
 		    },
-		    "images": {
-			    "large": "/drivers/thermostat/assets/images/large.png",
-			    "small": "/drivers/thermostat/assets/images/small.png"
-		    },
-		    "pair": [
-			    {
-				    "id": "login"
-			    },
-			    {
-				    "id": "list_devices",
-				    "template": "list_devices",
-				    "navigation": {
-					    "next": "add_devices"
-				    }
-			    },
-			    {
-				    "id": "add_devices",
-				    "template": "add_devices"
+		    {
+			    "id": "list_devices",
+			    "template": "list_devices",
+			    "navigation": {
+				    "next": "add_devices"
 			    }
-		    ],
-		    "settings": [  
-                {
-                    "id": "username",
-                    "type": "text",
-                    "label": {
-                        "en": "Username",
-                        "nl": "Gebruikersnaam"
-                    },
-                    "value": ""
-                },
-                {
-                    "id": "password",
-                    "type": "password",
-                    "label": {
-                        "en": "Password",
-                        "nl": "Wachtwoord"
-                    },
-                    "value": ""
-                }
-		    ]
-	    }
-    ],
-    "capabilities": {
-	    "tado_manual": {
-		    "type": "boolean",
-		    "setable": true,
-		    "getable": true,
-		    "title": {
-			    "en": "Manual Control",
-			    "nl": "Handmatige bediening"
+		    },
+		    {
+			    "id": "add_devices",
+			    "template": "add_devices"
 		    }
-	    }
+	    ],
+	    "settings": [
+              {
+                  "id": "username",
+                  "type": "text",
+                  "label": {
+                      "en": "Username",
+                      "nl": "Gebruikersnaam"
+                  },
+                  "value": ""
+              },
+              {
+                  "id": "password",
+                  "type": "password",
+                  "label": {
+                      "en": "Password",
+                      "nl": "Wachtwoord"
+                  },
+                  "value": ""
+              }
+	    ]
     }
+  ],
+  "capabilities": {
+    "tado_smart": {
+        "type": "boolean",
+        "title": {
+            "en": ""
+        },
+        "getable": false,
+        "setable": true
+    },
+    "solar_intensity": {
+        "type": "number",
+        "title": {
+            "en": "Solar intensity",
+            "nl": "Zonne-intensiteit"
+        },
+        "getable": true,
+        "setable": false,
+        "units": {
+            "en": "%"
+        },
+        "step": "0.1",
+        "min": 0,
+        "max": 100
+    },
+    "heating_power": {
+        "type": "number",
+        "title": {
+            "en": "Heating",
+            "nl": "Verwarming"
+        },
+        "getable": true,
+        "setable": false,
+        "units": {
+            "en": "%"
+        },
+        "step": 1,
+        "min": 0,
+        "max": 100
+    },
+    "detect_open_window": {
+        "type": "boolean",
+        "title": {
+            "en": "Open window detection",
+            "nl": "Open raam detectie"
+        },
+        "getable": true,
+        "setable": false
+    },
+    "smart_heating": {
+        "type": "boolean",
+        "title": {
+            "en": "Smart schedule",
+            "nl": "Slimme schema"
+        },
+        "getable": true,
+        "setable": true
+    },
+    "weather_state": {
+      "type": "string",
+      "title": {
+          "en": "Weather",
+          "nl": "Weer"
+      },
+      "getable": true,
+      "setable": false,
+      "values": [
+        { "id": "night_clear", "title": { "en": "Clear night", "nl": "Heldere nacht" } },
+        { "id": "night_cloudy", "title": { "en": "Cloudy night", "nl": "Bewolkte nacht" } },
+        { "id": "cloudy", "title": { "en": "Cloudy", "nl": "Bewolkt" } },
+        { "id": "cloudy_mostly", "title": { "en": "Mostly cloudy", "nl": "Overwegend bewolkt" } },
+        { "id": "cloudy_partly", "title": { "en": "Partly cloudy", "nl": "Deels bewolkt" } },
+        { "id": "foggy", "title": { "en": "Foggy", "nl": "Mistig" } },
+        { "id": "drizzle", "title": { "en": "Drizzle", "nl": "Motregen" } },
+        { "id": "scattered_rain", "title": { "en": "Scattered rain", "nl": "Af en toe buien" } },
+        { "id": "rain", "title": { "en": "Rain", "nl": "Regen" } },
+        { "id": "snow", "title": { "en": "Snow", "nl": "Sneeuw" } },
+        { "id": "thunderstorms", "title": { "en": "Thunderstorms", "nl": "Onweersbuien" } },
+        { "id": "sun", "title": { "en": "Sunny", "nl": "Zonnig" } },
+        { "id": "windy", "title": { "en": "Windy", "nl": "Winderig" } }
+      ]
+    },
+    "presence_status": {
+        "type": "boolean",
+        "title": {
+            "en": "Persons",
+            "nl": "Personen"
+        },
+        "getable": true,
+        "setable": true
+    }
+  },
+  "flow": {
+    "triggers": [
+      {
+        "id": "inside_temperature",
+        "title": {
+          "en": "Temperature has changed",
+          "nl": "Temperatuur is veranderd"
+        },
+				"hint": {
+					"en": "This card starts a Flow when a change in temperature is observed.",
+					"nl": "Dit kaartje start een Flow wanneer een verandering van de temperatuur wordt waargenomen."
+				},
+        "tokens": [
+          {
+            "name": "temperature",
+            "type": "number",
+            "title": {
+                "en": "temperature",
+                "nl": "temperatuur"
+            },
+            "example": 18
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=thermostat&capabilities=measure_temperature.inside"
+          }
+        ]
+      },
+      {
+        "id": "humidity",
+        "title": {
+          "en": "Humidity changed",
+          "nl": "Luchtvochtigheid is veranderd"
+        },
+				"hint": {
+					"en": "This card starts a Flow when a change in humidity is observed.",
+					"nl": "Dit kaartje start een Flow wanneer een verandering van de luchtvochtigheid wordt waargenomen."
+				},
+        "tokens": [
+          {
+            "name": "percentage",
+            "type": "number",
+            "title": {
+              "en": "humidity (%)",
+              "nl": "luchtvochtigheid (%)"
+            },
+            "example": 37
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=thermostat&capabilities=measure_humidity"
+          }
+        ]
+      },
+      {
+        "id": "heating_power",
+        "title": {
+          "en": "Heating capacity has changed",
+          "nl": "Verwarmingscapaciteit is veranderd"
+        },
+				"hint": {
+					"en": "This card starts a Flow when a change in heating capacity is observed.",
+					"nl": "Dit kaartje start een Flow wanneer een verandering van de verwarmingscapaciteit wordt waargenomen."
+				},
+        "tokens": [
+          {
+            "name": "percentage",
+            "type": "number",
+            "title": {
+                "en": "capacity (%)",
+                "nl": "capaciteit (%)"
+            },
+            "example": 45
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=thermostat&capabilities=heating_power"
+          }
+        ]
+      },
+      {
+        "id": "detect_open_window",
+        "title": {
+          "en": "Open Window Detection has changed",
+          "nl": "Open Raam Detectie is veranderd"
+        },
+				"hint": {
+					"en": "This card starts a Flow when the status of the Open Window Detection changes.",
+					"nl": "Dit kaartje start een Flow wanneer de status van de Open Raam Detectie verandert."
+				},
+        "tokens": [
+          {
+            "name": "detection",
+            "type": "boolean",
+            "title": {
+              "en": "active (true or not)",
+              "nl": "actief (waar of niet)"
+            },
+            "example": true
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=thermostat&capabilities=detect_open_window"
+          }
+        ]
+      },
+      {
+        "id": "smart_heating",
+        "title": {
+          "en": "Smart schedule status has changed",
+          "nl": "Slimme schema status is veranderd"
+        },
+				"hint": {
+					"en": "This card starts a Flow when the status of the Smart schedule changes.",
+					"nl": "Dit kaartje start een Flow wanneer de status van het Slimme schema verandert."
+				},
+        "tokens": [
+          {
+            "name": "detection",
+            "type": "boolean",
+            "title": {
+                "en": "active (true or not)",
+                "nl": "actief (waar of niet)"
+            },
+            "example": true
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=thermostat&capabilities=smart_heating"
+          }
+        ]
+      },
+      {
+        "id": "presence_status",
+        "title": {
+          "en": "Presence status has changed",
+          "nl": "Aanwezigheidsstatus is veranderd"
+        },
+				"hint": {
+					"en": "This card starts a Flow when the Presence status changes.",
+					"nl": "Dit kaartje start een Flow wanneer de Aanwezigheidsstatus verandert."
+				},
+        "tokens": [
+          {
+            "name": "presence",
+            "type": "boolean",
+            "title": {
+                "en": "somebody is home (true or not)",
+                "nl": "iemand is thuis (waar of niet)"
+            },
+            "example": true
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=thermostat&capabilities=presence_status"
+          }
+        ]
+      },
+      {
+        "id": "outside_temperature",
+        "title": {
+          "en": "Outside temperature has changed",
+          "nl": "Buiten temperatuur is veranderd"
+        },
+				"hint": {
+					"en": "This card starts a Flow when a change in the outside temperature is observed. This information is NOT measured by your thermostat, but is delivered to tado via an external party!",
+					"nl": "Dit kaartje start een Flow wanneer een verandering van de buitentemperatuur wordt waargenomen. Deze informatie wordt NIET door je thermostaat gemeten, maar wordt via een externe partij aan tado geleverd!"
+				},
+        "tokens": [
+          {
+            "name": "temperature",
+            "type": "number",
+            "title": {
+                "en": "temperature",
+                "nl": "temperatuur"
+            },
+            "example": 18
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=thermostat&capabilities=measure_temperature.outside"
+          }
+        ]
+      },
+      {
+        "id": "solar_intensity",
+        "title": {
+          "en": "Solar intensity changed",
+          "nl": "Zonne-intensiteit is veranderd"
+        },
+				"hint": {
+					"en": "This card starts a Flow when a change in the Solar Intensity is observed. This information is NOT measured by your thermostat, but is delivered to tado via an external party!",
+					"nl": "Dit kaartje start een Flow wanneer een verandering van de Zonne-intensiteit wordt waargenomen. Deze informatie wordt NIET door je thermostaat gemeten, maar wordt via een externe partij aan tado geleverd!"
+				},
+        "tokens": [
+          {
+            "name": "intensity",
+            "title": {
+                "en": "intensity (%)",
+                "nl": "intensiteit (%)"
+            },
+            "example": {
+                "en": "50"
+            }
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=thermostat&capabilities=solar_intensity"
+          }
+        ]
+      },
+      {
+        "id": "weather",
+        "title": {
+          "en": "The weather changes",
+          "nl": "Het weer veranderd"
+        },
+				"hint": {
+					"en": "This card starts a Flow when a change in the Weather Conditions is observed. This information is NOT measured by your thermostat, but is delivered to tado via an external party!",
+					"nl": "Dit kaartje start een Flow wanneer een verandering van de Weersomstandigheden wordt waargenomen. Deze informatie wordt NIET door je thermostaat gemeten, maar wordt via een externe partij aan tado geleverd!"
+				},
+        "tokens": [
+          {
+            "name": "condition",
+            "title": {
+                "en": "conditions",
+                "nl": "omstandigheden"
+            },
+            "example": {
+                "en": "Sunny, Rain, Foggy, Thunderstorms etc.",
+                "nl": "Zonnig, Regen, Mist, Onweersbuien etc."
+            }
+          },
+          {
+            "name": "state",
+            "title": {
+                "en": "id... options:\nnight_clear\nnight_cloudy\ncloudy\ncloudy_mostly\ncloudy_partly\nfoggy\ndrizzle\nscattered_rain\nrain\nsnow\nthunderstorms\nsun\nwindy",
+                "nl": "id... opties:\nnight_clear\nnight_cloudy\ncloudy\ncloudy_mostly\ncloudy_partly\nfoggy\ndrizzle\nscattered_rain\nrain\nsnow\nthunderstorms\nsun\nwindy"
+            },
+            "example": {
+                "en": "sun, rain, foggy, thunderstorms etc."
+            }
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=thermostat&capabilities=weather_state"
+          }
+        ]
+      }
+    ],
+
+    "conditions": [
+      {
+        "id": "weather_state",
+        "title": {
+            "en": "Weather condition !{{is|is not}}",
+            "nl": "Weersomstandigheid !{{is|is niet}}"
+        },
+        "hint": {
+          "en": "Use this card to determine whether or not a weather condition occurs.",
+          "nl": "Gebruik dit kaartje om te bepalen of een weersomstandigheid wel of niet optreedt."
+        },
+        "args": [
+          {
+            "name": "current_state",
+            "type": "dropdown",
+            "values": [
+              { "id": "night_clear", "label": { "en": "Clear night", "nl": "Heldere nacht" } },
+              { "id": "night_cloudy", "label": { "en": "Cloudy night", "nl": "Bewolkte nacht" } },
+              { "id": "cloudy", "label": { "en": "Cloudy", "nl": "Bewolkt" } },
+              { "id": "cloudy_mostly", "label": { "en": "Mostly cloudy", "nl": "Overwegend bewolkt" } },
+              { "id": "cloudy_partly", "label": { "en": "Partly cloudy", "nl": "Deels bewolkt" } },
+              { "id": "foggy", "label": { "en": "Foggy", "nl": "Mistig" } },
+              { "id": "drizzle", "label": { "en": "Drizzle", "nl": "Motregen" } },
+              { "id": "scattered_rain", "label": { "en": "Scattered rain", "nl": "Af en toe buien" } },
+              { "id": "rain", "label": { "en": "Rain", "nl": "Regen" } },
+              { "id": "snow", "label": { "en": "Snow", "nl": "Sneeuw" } },
+              { "id": "thunderstorms", "label": { "en": "Thunderstorms", "nl": "Onweersbuien" } },
+              { "id": "sun", "label": { "en": "Sunny", "nl": "Zonnig" } },
+              { "id": "windy", "label": { "en": "Windy", "nl": "Winderig" } }
+            ]
+          },
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=thermostat&capabilities=weather_state"
+          }
+        ]
+      },
+      {
+        "id": "presence_status",
+        "title": {
+            "en": "!{{Someone is at home|Everyone is out}}",
+            "nl": "!{{Iemand is thuis|Iedereen is weg}}"
+        },
+        "hint": {
+          "en": "Use this card to determine whether someone is at home or not.",
+          "nl": "Gebruik dit kaartje om te bepalen of er iemand thuis is of niet."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=thermostat&capabilities=presence_status"
+          }
+        ]
+      },
+      {
+        "id": "smart_heating",
+        "title": {
+            "en": "Smart schedule !{{is active|is not active}}",
+            "nl": "Slimme schema !{{is actief|is niet actief}}"
+        },
+        "hint": {
+          "en": "Use this card to determine whether Smart schedule is active or not.",
+          "nl": "Gebruik dit kaartje om te bepalen of het Slimme schema actief is of niet."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=thermostat&capabilities=smart_heating"
+          }
+        ]
+      },
+      {
+        "id": "open_window",
+        "title": {
+            "en": "Open window detection !{{is active|is not active}}",
+            "nl": "Open raam detectie !{{is actief|is niet actief}}"
+        },
+        "hint": {
+          "en": "Use this card to determine whether Open window detection is active or not.",
+          "nl": "Gebruik dit kaartje om te bepalen de Open raam detectie actief is of niet."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=thermostat&capabilities=detect_open_window"
+          }
+        ]
+      }
+    ],
+
+  	"actions": [
+      {
+      	"id": "set_smart",
+      	"title": {
+        	"en": "Smart schedule activation",
+          "nl": "Slimme schema activatie"
+      	},
+        "hint": {
+          "en": "This card activates the Smart schedule.",
+          "nl": "Dit kaartje activeert het Slimme schema."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=thermostat"
+          }
+        ]
+    	},
+    	{
+      	"id": "set_off",
+      	"title": {
+          	"en": "Turn heating off",
+            "nl": "Verwarming uitschakelen"
+
+      	},
+        "hint": {
+          "en": "This card turns off the heating.",
+          "nl": "Dit kaartje schakelt de verwarming uit."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=thermostat"
+          }
+        ]
+    	}
+  	]
+  }
 }
