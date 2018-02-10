@@ -1,18 +1,53 @@
 {
   "tado_user": "Gebruiker voor my.tado.com",
   "tado_password": "Wachtwoord",
-  
-  "night_clear": "Heldere nacht",
-  "night_cloudy": "Bewolkte nacht",
-  "cloudy": "Bewolkt",
-  "cloudy_mostly": "Overwegend bewolkt",
+
+  "Home": "Woning",
+
+  "sun": "Zonnig",
   "cloudy_partly": "Deels bewolkt",
+  "cloudy_mostly": "Overwegend bewolkt",
+  "cloudy": "Bewolkt",
   "foggy": "Mistig",
   "drizzle": "Motregen",
-  "scattered_rain": "Af en toe buien",
+  "scattered_rain": "Af en toe regen",
   "rain": "Regen",
+  "rain_hail": "Regen, hagel",
+  "hail": "Hagel",
+  "scattered_rain_snow": "Af en toe regen, sneeuw",
+  "rain_snow": "Regen, sneeuw",
+  "scattered_snow": "Af en toe sneeuw",
   "snow": "Sneeuw",
-  "thunderstorms": "Onweersbuien",
-  "sun": "Zonnig",
-  "windy": "Winderig"
+  "freezing": "Ijskoud",
+  "night_clear": "Heldere nacht",
+  "night_cloudy": "Bewolkte nacht",
+  "thunderstorm": "Onweer",
+  "windy": "Winderig",
+
+  "On": "Aan",
+  "Off": "Uit",
+  "Auto": "Auto",
+  "Cool": "Cool",
+  "Heat": "Heat",
+  "Dry": "Dry",
+  "Fan": "Fan",
+  "manual": "handbediend",
+  "until_schedule": "tot schema",
+
+  "Thermostat" : "Thermostaat",
+  "Therm" : "Therm",
+  "Valve": "Kraan",
+  "Valves": "Kranen",
+  "Both": "Allebei",
+  "All": "Allemaal",
+  "and": "en",
+
+  "degrees": "graden",
+
+  "Location-based control": "Locatiegebaseerde controle",
+  "At Home": "Thuis",
+  "relative": "relatief",
+  "Distance": "Afstand",
+  "from": "van",
+  "Home Area": "Woongebied"
 }
