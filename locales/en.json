@@ -1,18 +1,53 @@
 {
   "tado_user": "User for my.tado.com",
   "tado_password": "Password",
-  
-  "night_clear": "Clear night",
-  "night_cloudy": "Cloudy night",
-  "cloudy": "Cloudy",
-  "cloudy_mostly": "Mostly cloudy",
+
+  "Home": "Home",
+
+  "sun": "Sunny",
   "cloudy_partly": "Partly cloudy",
+  "cloudy_mostly": "Mostly cloudy",
+  "cloudy": "Cloudy",
   "foggy": "Foggy",
   "drizzle": "Drizzle",
   "scattered_rain": "Scattered rain",
   "rain": "Rain",
+  "rain_hail": "Rain,/ hail",
+  "hail": "Hail",
+  "scattered_rain_snow": "Scattered rain, snow",
+  "rain_snow": "Rain, snow",
+  "scattered_snow": "Scattered snow",
   "snow": "Snow",
-  "thunderstorms": "Thunderstorms",
-  "sun": "Sunny",
-  "windy": "Windy"
+  "freezing": "Freezing",
+  "night_clear": "Clear night",
+  "night_cloudy": "Cloudy night",
+  "thunderstorm": "Thunderstorms",
+  "windy": "Windy",
+
+  "On": "On",
+  "Off": "Off",
+  "Auto": "Auto",
+  "Cool": "Cool",
+  "Heat": "Heat",
+  "Dry": "Dry",
+  "Fan": "Fan",
+  "manual": "manual",
+  "until_schedule": "until schedule",
+
+  "Thermostat" : "Thermostat",
+  "Therm" : "Therm",
+  "Valve": "Valve",
+  "Valves": "Valves",
+  "Both": "Both",
+  "All": "All",
+  "and": "and",
+
+  "degrees": "degrees",
+
+  "Location-based control": "Location-based control",
+  "At Home": "At Home",
+  "relative": "relative",
+  "Distance": "Distance",
+  "from": "from",
+  "Home Area": "Home Area"
 }
