@@ -98,7 +98,7 @@
         "units": {
             "en": "%"
         },
-        "step": "0.1",
+        "step": 0.1,
         "min": 0,
         "max": 100
     },
@@ -201,8 +201,7 @@
             "title": {
                 "en": "switched on (true or false)",
                 "nl": "ingeschakeld (waar of niet waar)"
-            },
-            "example": true
+            }
           }
         ],
         "args": [
