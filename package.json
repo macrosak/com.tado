@@ -1,18 +1,7 @@
 {
   "name": "com.tado",
   "version": "1.0.0",
-  "description": "Adds support for Tado",
-  "main": "app.js",
-  "directories": {
-    "lib": "lib"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "request": "^2.83.0",
-    "request-promise-native": "^1.0.5"
+    "homey-oauth2app": "^1.0.3"
   }
 }

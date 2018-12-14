@@ -1,19 +1,33 @@
 'use strict';
 
 const Homey = require('homey');
-const TadoApi = require('./lib/TadoApi');
+const TadoOAuth2Client = require('./lib/TadoOAuth2Client');
+const { OAuth2App } = require('homey-oauth2app');
 
-class TadoApp extends Homey.App {
+const SCOPES = [
+	'identity:read',
+	'home.details:read',
+	'home.operation:read',
+	'home.operation:write',
+	'home.webhooks',
+	'home.mobile.devices.details:read',
+	'home.mobile.devices.location:read'
+];
 
-	onInit() {
+class TadoApp extends OAuth2App {
 
+	onOAuth2Init() {
+  	
+  	//this.enableOAuth2Debug();
+  	this.setOAuth2Config({
+    	client: TadoOAuth2Client,
+    	apiUrl: 'https://my.tado.com/api/v2',
+    	tokenUrl: 'https://auth.tado.com/oauth/token',
+    	authorizationUrl: 'https://auth.tado.com/oauth/authorize',
+    	scopes: SCOPES,
+  	});
+  	
 		this.log('TadoApp is running...');
-
-		if( typeof Homey.env.CLIENT_ID === 'undefined' )
-			throw new Error('Missing Client ID. Make sure your env.json is present.');
-
-		if( typeof Homey.env.CLIENT_SECRET === 'undefined' )
-			throw new Error('Missing Client Secret. Make sure your env.json is present.');
 	}
 
 }

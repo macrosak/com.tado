@@ -1,0 +1,33 @@
+{
+	"class": "thermostat",
+	"capabilities": [
+		"measure_temperature",
+		"measure_humidity",
+		"target_temperature"
+	],
+	"name": {
+		"en": "tado° zones",
+		"nl": "tado° zones"
+	},
+	"images": {
+		"large": "/drivers/thermostat/assets/images/large.png",
+		"small": "/drivers/thermostat/assets/images/small.png"
+	},
+	"pair": [
+		{
+			"id": "login_oauth2",
+			"template": "login_oauth2"
+		},
+		{
+			"id": "list_devices",
+			"template": "list_devices",
+			"navigation": {
+				"next": "add_devices"
+			}
+		},
+		{
+			"id": "add_devices",
+			"template": "add_devices"
+		}
+	]
+}

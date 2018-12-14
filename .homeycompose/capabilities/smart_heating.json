@@ -1,0 +1,9 @@
+{
+	"type": "boolean",
+	"title": {
+		"en": "Smart Schedule",
+		"nl": "Slimme Schema"
+	},
+	"getable": true,
+	"setable": true
+}

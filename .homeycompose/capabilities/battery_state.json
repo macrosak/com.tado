@@ -1,0 +1,9 @@
+{
+	"type": "string",
+	"title": {
+		"en": "Battery",
+		"nl": "Batterij"
+	},
+	"getable": true,
+	"setable": false
+}

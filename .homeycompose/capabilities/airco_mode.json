@@ -1,0 +1,9 @@
+{
+	"type": "string",
+	"title": {
+		"en": "Mode",
+		"nl": "Modus"
+	},
+	"getable": true,
+	"setable": false
+}

@@ -8,72 +8,8 @@ const Homey = require('homey');
 
 class TadoDeviceThermostat extends TadoDevice {
 
-	triggerFlowTargetOnOff( device, tokens ) {
-		this._flowTriggerTargetOnOff.trigger( device, tokens ).catch( this.error )
-	}
-
-	triggerFlowHumidity( device, tokens ) {
-		this._flowTriggerHumidity.trigger( device, tokens ).catch( this.error )
-	}
-
-	triggerFlowHeatingPower( device, tokens ) {
-		this._flowTriggerHeatingPower.trigger( device, tokens ).catch( this.error )
-	}
-
-	triggerFlowOpenWindow( device, tokens ) {
-		this._flowTriggerOpenWindow.trigger( device, tokens ).catch( this.error )
-	}
-
-	triggerFlowACModeChange( device, tokens, state ) {
-		this._flowTriggerACModeChange.trigger( device, tokens, state ).catch( this.error )
-	}
-
-	triggerFlowSmartHeating( device, tokens ) {
-		this._flowTriggerSmartHeating.trigger( device, tokens ).catch( this.error )
-	}
-
-	triggerFlowOutsideTemperature( device, tokens ) {
-		this._flowTriggerOutsideTemperature.trigger( device, tokens ).catch( this.error )
-	}
-
-	triggerFlowSolarIntensity( device, tokens ) {
-		this._flowTriggerOutsideTemperature.trigger( device, tokens ).catch( this.error )
-	}
-
-	triggerFlowWeather( device, tokens, state ) {
-		this._flowTriggerWeather.trigger( device, tokens, state ).catch( this.error )
-	}
-
-	triggerFlowPresence( device, tokens ) {
-		this._flowTriggerPresence.trigger( device, tokens ).catch( this.error )
-	}
-
-	triggerFlowBatteryChange( device, tokens ) {
-		this._flowTriggerBatteryChange.trigger( device, tokens ).catch( this.error )
-	}
-
-	triggerFlowMobileGeoTrackingEnabled( device, tokens, state ) {
-		this._flowTriggerMobileGeoTrackingEnabled.trigger( device, tokens, state ).catch( this.error )
-	}
-
-	triggerFlowMobileLocation( device, tokens, state ) {
-		this._flowTriggerMobileLocation.trigger( device, tokens, state ).catch( this.error )
-	}
-
-	triggerFlowMobileTimeSinceLocation( device, tokens, state ) {
-		this._flowTriggerMobileTimeSinceLocation.trigger( device, tokens, state ).catch( this.error )
-	}
-
-	triggerFlowMobileAtHome( device, tokens, state ) {
-		this._flowTriggerMobileAtHome.trigger( device, tokens, state ).catch( this.error )
-	}
-
-	triggerFlowMobileRelativeDistanceFromHomeFence( device, tokens, state ) {
-		this._flowTriggerMobileRelativeDistanceFromHomeFence.trigger( device, tokens, state ).catch( this.error )
-	}
-
-	onInit() {
-		super.onInit();
+	onOAuth2Init() {
+		super.onOAuth2Init();
 
 		this.registerCapabilityListener('target_temperature', this._onCapabilityTargetTemperature.bind(this))
 		this.registerCapabilityListener('target_onoff', this._onCapabilityTargetOnOff.bind(this))
@@ -168,6 +104,72 @@ class TadoDeviceThermostat extends TadoDevice {
 					return Promise.resolve(tadoSub.getAutocompleteMobileDevicesLocationBased(args) );
 				});
 
+	}
+	
+	
+
+	triggerFlowTargetOnOff( device, tokens ) {
+		this._flowTriggerTargetOnOff.trigger( device, tokens ).catch( this.error )
+	}
+
+	triggerFlowHumidity( device, tokens ) {
+		this._flowTriggerHumidity.trigger( device, tokens ).catch( this.error )
+	}
+
+	triggerFlowHeatingPower( device, tokens ) {
+		this._flowTriggerHeatingPower.trigger( device, tokens ).catch( this.error )
+	}
+
+	triggerFlowOpenWindow( device, tokens ) {
+		this._flowTriggerOpenWindow.trigger( device, tokens ).catch( this.error )
+	}
+
+	triggerFlowACModeChange( device, tokens, state ) {
+		this._flowTriggerACModeChange.trigger( device, tokens, state ).catch( this.error )
+	}
+
+	triggerFlowSmartHeating( device, tokens ) {
+		this._flowTriggerSmartHeating.trigger( device, tokens ).catch( this.error )
+	}
+
+	triggerFlowOutsideTemperature( device, tokens ) {
+		this._flowTriggerOutsideTemperature.trigger( device, tokens ).catch( this.error )
+	}
+
+	triggerFlowSolarIntensity( device, tokens ) {
+		this._flowTriggerOutsideTemperature.trigger( device, tokens ).catch( this.error )
+	}
+
+	triggerFlowWeather( device, tokens, state ) {
+		this._flowTriggerWeather.trigger( device, tokens, state ).catch( this.error )
+	}
+
+	triggerFlowPresence( device, tokens ) {
+		this._flowTriggerPresence.trigger( device, tokens ).catch( this.error )
+	}
+
+	triggerFlowBatteryChange( device, tokens ) {
+		this._flowTriggerBatteryChange.trigger( device, tokens ).catch( this.error )
+	}
+
+	triggerFlowMobileGeoTrackingEnabled( device, tokens, state ) {
+		this._flowTriggerMobileGeoTrackingEnabled.trigger( device, tokens, state ).catch( this.error )
+	}
+
+	triggerFlowMobileLocation( device, tokens, state ) {
+		this._flowTriggerMobileLocation.trigger( device, tokens, state ).catch( this.error )
+	}
+
+	triggerFlowMobileTimeSinceLocation( device, tokens, state ) {
+		this._flowTriggerMobileTimeSinceLocation.trigger( device, tokens, state ).catch( this.error )
+	}
+
+	triggerFlowMobileAtHome( device, tokens, state ) {
+		this._flowTriggerMobileAtHome.trigger( device, tokens, state ).catch( this.error )
+	}
+
+	triggerFlowMobileRelativeDistanceFromHomeFence( device, tokens, state ) {
+		this._flowTriggerMobileRelativeDistanceFromHomeFence.trigger( device, tokens, state ).catch( this.error )
 	}
 
 
@@ -552,10 +554,12 @@ class TadoDeviceThermostat extends TadoDevice {
 			if(geoOn === false){ // no mobile device with valid LBC
 				value = true; // act like someone is at home. (default when LBC is not used by any phone/tablet)
 			}
-			if(this.getCapabilityValue('presence_status') !== value ){
-				tadoSub.doLog( 'Flow trigger for ' + this.getName() + ': Presence changed to: ' + value )
-				this.triggerFlowPresence( this, {'presence': value } )
-				this.setCapabilityValue('presence_status', value ).catch( this.error );
+			if(this.hasCapability('presence_status')) {
+  			if(this.getCapabilityValue('presence_status') !== value ){
+  				tadoSub.doLog( 'Flow trigger for ' + this.getName() + ': Presence changed to: ' + value )
+  				this.triggerFlowPresence( this, {'presence': value } )
+  				this.setCapabilityValue('presence_status', value ).catch( this.error );
+  			}
 			}
 		}
 
@@ -732,12 +736,12 @@ class TadoDeviceThermostat extends TadoDevice {
 
 
 	onFlowActionSetSmart() {
-		this._api.unsetOverlay( this._homeId, this._zoneId);
+		this.oAuth2Client.unsetOverlay( this._homeId, this._zoneId);
 	}
 
 	onFlowActionSetOn() {
 		// - On Until user intervention, for dev without thermostat
-		this._api.setOverlay( this._homeId, this._zoneId, {
+		this.oAuth2Client.setOverlay( this._homeId, this._zoneId, {
 			"setting": {
 				"type": this._type,
 				"power": "ON"
@@ -751,7 +755,7 @@ class TadoDeviceThermostat extends TadoDevice {
 
 	onFlowActionSetOnUntilTimer(args) {
 		// - On Until set timer ends, for dev without thermostat
-		this._api.setOverlay( this._homeId, this._zoneId, {
+		this.oAuth2Client.setOverlay( this._homeId, this._zoneId, {
 			"setting": {
 				"type": this._type,
 				"power": "ON"
@@ -766,7 +770,7 @@ class TadoDeviceThermostat extends TadoDevice {
 
 	onFlowActionSetOnUntilSmart() {
 		// - On Until next Smart Schedule change, for dev without thermostat
-		this._api.setOverlay( this._homeId, this._zoneId, {
+		this.oAuth2Client.setOverlay( this._homeId, this._zoneId, {
 			"setting": {
 				"type": this._type,
 				"power": "ON"
@@ -779,7 +783,7 @@ class TadoDeviceThermostat extends TadoDevice {
 	}
 
 	onFlowActionSetOff() {
-		this._api.setOverlay( this._homeId, this._zoneId, {
+		this.oAuth2Client.setOverlay( this._homeId, this._zoneId, {
 			"setting": {
 				"type": this._type,
 				"power": "OFF"
@@ -792,7 +796,7 @@ class TadoDeviceThermostat extends TadoDevice {
 	}
 
 	onFlowActionSetOffUntilTimer(args) {
-		this._api.setOverlay( this._homeId, this._zoneId, {
+		this.oAuth2Client.setOverlay( this._homeId, this._zoneId, {
 			"setting": {
 				"type": this._type,
 				"power": "OFF"
@@ -807,7 +811,7 @@ class TadoDeviceThermostat extends TadoDevice {
 
 	onFlowActionSetOffUntilSmart() {
 		// - Off Until next Smart Schedule change
-		this._api.setOverlay( this._homeId, this._zoneId, {
+		this.oAuth2Client.setOverlay( this._homeId, this._zoneId, {
 			"setting": {
 				"type": this._type,
 				"power": "OFF"
@@ -857,7 +861,7 @@ class TadoDeviceThermostat extends TadoDevice {
 			break;
 		}
 
-		this._api.setOverlay( this._homeId, this._zoneId, {
+		this.oAuth2Client.setOverlay( this._homeId, this._zoneId, {
 			"type": "MANUAL",
 			"setting": tadoOverlaySetting,
 			"termination": {
@@ -869,7 +873,7 @@ class TadoDeviceThermostat extends TadoDevice {
 	}
 
 	onFlowActionTemperatureAircoUntilTimer(args) {
-		this._api.setOverlay( this._homeId, this._zoneId, {
+		this.oAuth2Client.setOverlay( this._homeId, this._zoneId, {
 			"type": "MANUAL",
 			"setting": {
 				"type": "AIR_CONDITIONING",
@@ -919,7 +923,7 @@ class TadoDeviceThermostat extends TadoDevice {
 			break;
 		}
 
-		this._api.setOverlay( this._homeId, this._zoneId, {
+		this.oAuth2Client.setOverlay( this._homeId, this._zoneId, {
 			"type": "MANUAL",
 			"setting": tadoOverlaySetting,
 			"termination": { "type": "TADO_MODE" }
@@ -928,7 +932,7 @@ class TadoDeviceThermostat extends TadoDevice {
 	}
 
 	onFlowActionTemperatureAircoUntilSmart(args) {
-		this._api.setOverlay( this._homeId, this._zoneId, {
+		this.oAuth2Client.setOverlay( this._homeId, this._zoneId, {
 			"type": "MANUAL",
 			"setting": {
 				"type": "AIR_CONDITIONING",
@@ -974,7 +978,7 @@ class TadoDeviceThermostat extends TadoDevice {
 				break;
 		}
 
-		return this._api.setOverlay( this._homeId, this._zoneId, {
+		return this.oAuth2Client.setOverlay( this._homeId, this._zoneId, {
 			"setting": objSetting,
 			"termination": {
 				"type": "MANUAL"
@@ -999,7 +1003,7 @@ class TadoDeviceThermostat extends TadoDevice {
 			}
 		}
 
-		return this._api.setOverlay( this._homeId, this._zoneId, objOverlay ).then(() => {
+		return this.oAuth2Client.setOverlay( this._homeId, this._zoneId, objOverlay ).then(() => {
 			return this.getState();
 		})
 		//return true;
@@ -1007,7 +1011,7 @@ class TadoDeviceThermostat extends TadoDevice {
 
 	async _onCapabilityTadoAuto( value ) {
 		if( !this.getCapabilityValue('smart_heating') ){ // smart_heating false -> true
-			return this._api.unsetOverlay( this._homeId, this._zoneId ).then(() => {
+			return this.oAuth2Client.unsetOverlay( this._homeId, this._zoneId ).then(() => {
 				return this.getState();
 			});
 		} else { // smart_heating was true already

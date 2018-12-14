@@ -1,0 +1,15 @@
+{
+	"type": "number",
+	"title": {
+		"en": "Solar intensity",
+		"nl": "Zonne-intensiteit"
+	},
+	"getable": true,
+	"setable": false,
+	"units": {
+		"en": "%"
+	},
+	"step": 0.1,
+	"min": 0,
+	"max": 100
+}

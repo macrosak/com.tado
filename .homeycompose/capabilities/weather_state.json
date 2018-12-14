@@ -1,0 +1,9 @@
+{
+	"type": "string",
+	"title": {
+		"en": "Weather",
+		"nl": "Weer"
+	},
+	"getable": true,
+	"setable": false
+}
