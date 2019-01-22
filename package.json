@@ -2,6 +2,6 @@
   "name": "com.tado",
   "version": "1.0.0",
   "dependencies": {
-    "homey-oauth2app": "^1.0.3"
+    "homey-oauth2app": "^1.2.3"
   }
 }
