@@ -135,13 +135,14 @@ class tadoMobileInsights {
   		if (err === null) {
         logs.forEach(log => {
           var keepInsight = false;
+          var id = ( log.id || log.name );
           availableMobileDeviceIds.forEach(function(idCheck) {
-            if( Number( log.id.substr(log.id.indexOf('_') + 1) ) === idCheck ) { // compare insight_ID to available mobile device IDs
+            if( Number( id.substr(id.indexOf('_') + 1) ) === idCheck ) { // compare insight_ID to available mobile device IDs
               keepInsight = true
             }
           });
           if( !keepInsight ) { // store insight when associated mobile device is not connected anymore
-            logsToRemove.push(log.id)
+            logsToRemove.push(id)
           }
         });
         logsToRemove.forEach(log => { // remove stored insights
