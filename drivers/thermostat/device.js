@@ -735,13 +735,13 @@ class TadoDeviceThermostat extends TadoDevice {
 	}
 
 
-	onFlowActionSetSmart() {
-		this.oAuth2Client.unsetOverlay( this._homeId, this._zoneId);
+	async onFlowActionSetSmart() {
+		return this.oAuth2Client.unsetOverlay( this._homeId, this._zoneId);
 	}
 
-	onFlowActionSetOn() {
+	async onFlowActionSetOn() {
 		// - On Until user intervention, for dev without thermostat
-		this.oAuth2Client.setOverlay( this._homeId, this._zoneId, {
+		return this.oAuth2Client.setOverlay( this._homeId, this._zoneId, {
 			"setting": {
 				"type": this._type,
 				"power": "ON"
@@ -750,12 +750,11 @@ class TadoDeviceThermostat extends TadoDevice {
 				"type": "MANUAL"
 			}
 		});
-		return true;
 	}
 
-	onFlowActionSetOnUntilTimer(args) {
+	async onFlowActionSetOnUntilTimer(args) {
 		// - On Until set timer ends, for dev without thermostat
-		this.oAuth2Client.setOverlay( this._homeId, this._zoneId, {
+		return this.oAuth2Client.setOverlay( this._homeId, this._zoneId, {
 			"setting": {
 				"type": this._type,
 				"power": "ON"
@@ -765,12 +764,11 @@ class TadoDeviceThermostat extends TadoDevice {
 				"durationInSeconds": Number((args.timer_off).substr(0,2)) * 3600 + Number((args.timer_off).substr(3,2)) * 60
 			}
 		});
-		return true;
 	}
 
-	onFlowActionSetOnUntilSmart() {
+	async onFlowActionSetOnUntilSmart() {
 		// - On Until next Smart Schedule change, for dev without thermostat
-		this.oAuth2Client.setOverlay( this._homeId, this._zoneId, {
+		return this.oAuth2Client.setOverlay( this._homeId, this._zoneId, {
 			"setting": {
 				"type": this._type,
 				"power": "ON"
@@ -779,11 +777,10 @@ class TadoDeviceThermostat extends TadoDevice {
 				"type": "TADO_MODE"
 			}
 		});
-		return true;
 	}
 
-	onFlowActionSetOff() {
-		this.oAuth2Client.setOverlay( this._homeId, this._zoneId, {
+	async onFlowActionSetOff() {
+		return this.oAuth2Client.setOverlay( this._homeId, this._zoneId, {
 			"setting": {
 				"type": this._type,
 				"power": "OFF"
@@ -792,11 +789,10 @@ class TadoDeviceThermostat extends TadoDevice {
 				"type": "MANUAL"
 			}
 		});
-		return true;
 	}
 
-	onFlowActionSetOffUntilTimer(args) {
-		this.oAuth2Client.setOverlay( this._homeId, this._zoneId, {
+	async onFlowActionSetOffUntilTimer(args) {
+		return this.oAuth2Client.setOverlay( this._homeId, this._zoneId, {
 			"setting": {
 				"type": this._type,
 				"power": "OFF"
@@ -806,12 +802,11 @@ class TadoDeviceThermostat extends TadoDevice {
 				"durationInSeconds": Number((args.timer_off).substr(0,2)) * 3600 + Number((args.timer_off).substr(3,2)) * 60
 			}
 		});
-		return true;
 	}
 
-	onFlowActionSetOffUntilSmart() {
+	async onFlowActionSetOffUntilSmart() {
 		// - Off Until next Smart Schedule change
-		this.oAuth2Client.setOverlay( this._homeId, this._zoneId, {
+		return this.oAuth2Client.setOverlay( this._homeId, this._zoneId, {
 			"setting": {
 				"type": this._type,
 				"power": "OFF"
@@ -820,10 +815,9 @@ class TadoDeviceThermostat extends TadoDevice {
 				"type": "TADO_MODE"
 			}
 		});
-		return true;
 	}
 
-	onFlowActionTemperatureUntilTimer(args) {
+	async onFlowActionTemperatureUntilTimer(args) {
 		var tCelsius = Number(args.temperature.celsius);
 
 		switch( this._type ){
@@ -861,19 +855,18 @@ class TadoDeviceThermostat extends TadoDevice {
 			break;
 		}
 
-		this.oAuth2Client.setOverlay( this._homeId, this._zoneId, {
+		return this.oAuth2Client.setOverlay( this._homeId, this._zoneId, {
 			"type": "MANUAL",
 			"setting": tadoOverlaySetting,
 			"termination": {
 				"type": "TIMER",
 				"durationInSeconds": Number((args.timer_off).substr(0,2)) * 3600 + Number((args.timer_off).substr(3,2)) * 60
 			}
-		}).catch( this.error );
-		return true;
+		})
 	}
 
-	onFlowActionTemperatureAircoUntilTimer(args) {
-		this.oAuth2Client.setOverlay( this._homeId, this._zoneId, {
+	async onFlowActionTemperatureAircoUntilTimer(args) {
+		return this.oAuth2Client.setOverlay( this._homeId, this._zoneId, {
 			"type": "MANUAL",
 			"setting": {
 				"type": "AIR_CONDITIONING",
@@ -885,11 +878,10 @@ class TadoDeviceThermostat extends TadoDevice {
 				"type": "TIMER",
 				"durationInSeconds": Number((args.timer_off).substr(0,2)) * 3600 + Number((args.timer_off).substr(3,2)) * 60
 			}
-		} ).catch( this.error );
-		return true;
+		})
 	}
 
-	onFlowActionTemperatureUntilSmart(args) {
+	async onFlowActionTemperatureUntilSmart(args) {
 		var tCelsius = Number(args.temperature.celsius);
 
 		switch( this._type ){
@@ -923,16 +915,15 @@ class TadoDeviceThermostat extends TadoDevice {
 			break;
 		}
 
-		this.oAuth2Client.setOverlay( this._homeId, this._zoneId, {
+		return this.oAuth2Client.setOverlay( this._homeId, this._zoneId, {
 			"type": "MANUAL",
 			"setting": tadoOverlaySetting,
 			"termination": { "type": "TADO_MODE" }
-		}).catch( this.error );
-		return true;
+		});
 	}
 
-	onFlowActionTemperatureAircoUntilSmart(args) {
-		this.oAuth2Client.setOverlay( this._homeId, this._zoneId, {
+	async onFlowActionTemperatureAircoUntilSmart(args) {
+		return this.oAuth2Client.setOverlay( this._homeId, this._zoneId, {
 			"type": "MANUAL",
 			"setting": {
 				"type": "AIR_CONDITIONING",
@@ -941,8 +932,7 @@ class TadoDeviceThermostat extends TadoDevice {
 				"temperature": { "celsius": Number(args.temperature.celsius) }
 			},
 			"termination": { "type": "TADO_MODE" }
-		}).catch( this.error );
-		return true;
+		});
 	}
 
 
@@ -986,7 +976,6 @@ class TadoDeviceThermostat extends TadoDevice {
 		}).then(() => {
 			return this.getState();
 		})
-		//return true;
 	}
 
 	async _onCapabilityTargetOnOff( value ) {
@@ -1006,7 +995,6 @@ class TadoDeviceThermostat extends TadoDevice {
 		return this.oAuth2Client.setOverlay( this._homeId, this._zoneId, objOverlay ).then(() => {
 			return this.getState();
 		})
-		//return true;
 	}
 
 	async _onCapabilityTadoAuto( value ) {
