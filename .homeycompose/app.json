@@ -1,50 +1,50 @@
 {
-	"id": "com.tado",
-	"sdk": 2,
-	"name": {
-		"en": "tado°"
-	},
-	"description": {
-		"en": "Adds support for tado°"
-	},
-	"tags": {
-		"en": [
-			"tado",
-			"thermostat",
-			"radiator thermostat",
-			"heating",
-			"hot water",
-			"air conditioning",
-			"presence"
-		],
-		"nl": [
-			"tado",
-			"thermostaat",
-			"radiator thermostaat",
-			"verwarming",
-			"warm water",
-			"air conditioning",
-			"airco",
-			"aanwezigheid"
-		]
-	},
-	"category": "climate",
-	"version": "3.0.0",
-	"compatibility": ">=1.5.0",
-	"author": {
-		"name": "Athom B.V."
-	},
-	"contributors": {
-		"developers": [
-			{
-				"name": "Alex van den Berg",
-				"website": "https://github.com/OpenMindNL",
-				"email": "openmind_nl@hotmail.com"
-			}
-		]
-	},
-	"images": {
-		"large": "/assets/images/large.png",
-		"small": "/assets/images/small.png"
-	}
+  "id": "com.tado",
+  "sdk": 2,
+  "name": {
+    "en": "tado°"
+  },
+  "description": {
+    "en": "Adds support for tado°"
+  },
+  "tags": {
+    "en": [
+      "tado",
+      "thermostat",
+      "radiator thermostat",
+      "heating",
+      "hot water",
+      "air conditioning",
+      "presence"
+    ],
+    "nl": [
+      "tado",
+      "thermostaat",
+      "radiator thermostaat",
+      "verwarming",
+      "warm water",
+      "air conditioning",
+      "airco",
+      "aanwezigheid"
+    ]
+  },
+  "category": "climate",
+  "version": "3.0.1",
+  "compatibility": ">=1.5.0",
+  "author": {
+    "name": "Athom B.V."
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Alex van den Berg",
+        "website": "https://github.com/OpenMindNL",
+        "email": "openmind_nl@hotmail.com"
+      }
+    ]
+  },
+  "images": {
+    "large": "/assets/images/large.png",
+    "small": "/assets/images/small.png"
+  }
 }
