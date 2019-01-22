@@ -95,13 +95,13 @@ class tadoMobileInsights {
           Homey.ManagerInsights.createLog(
             logName,
             insightOptions,
-            function callback(err, logs) {
+            function callback(err, log) {
               if(err) {
                 if(err.message !== 'already_exists') {
                   console.error(err);
                 }
               } else {
-              	logs.createEntry( logValue, logDate, function(err, success) {
+              	log.createEntry( logValue, logDate, function(err, success) {
               		if(err) { console.error(err) };
               	});
               }
@@ -133,19 +133,19 @@ class tadoMobileInsights {
     });
     Homey.ManagerInsights.getLogs( function(err, logs) { // get logs to compare name_ID
   		if (err === null) {
-        logs.forEach(function(item) {
+        logs.forEach(log => {
           var keepInsight = false;
           availableMobileDeviceIds.forEach(function(idCheck) {
-            if( Number( item.name.substr(item.name.indexOf('_') + 1) ) === idCheck ) { // compare insight_ID to available mobile device IDs
+            if( Number( log.id.substr(log.id.indexOf('_') + 1) ) === idCheck ) { // compare insight_ID to available mobile device IDs
               keepInsight = true
             }
           });
           if( !keepInsight ) { // store insight when associated mobile device is not connected anymore
-            logsToRemove.push(item.name)
+            logsToRemove.push(log.id)
           }
         });
-        logsToRemove.forEach(function(item) { // remove stored insights
-          thisDev.deleteMobileInsight( item )
+        logsToRemove.forEach(log => { // remove stored insights
+          thisDev.deleteMobileInsight( log )
         });
   		}
   	});
