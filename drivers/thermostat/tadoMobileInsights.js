@@ -221,11 +221,9 @@ class tadoMobileInsights {
         .then(() => {
           return mobileTokens[tokenName].setValue( tokenValue );
         })
-        .catch( err => {
-            console.log( err );
-        })
+        .catch(console.error)
     } else {
-      return mobileTokens[tokenName].setValue( tokenValue );
+      return mobileTokens[tokenName].setValue( tokenValue ).catch(console.error);
     }
   }
 
