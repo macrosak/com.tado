@@ -1,7 +1,7 @@
 {
 	"type": "boolean",
 	"title": {
-		"en": ""
+		"en": "Tado Smart"
 	},
 	"getable": false,
 	"setable": true
