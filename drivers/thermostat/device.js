@@ -137,7 +137,7 @@ class TadoDeviceThermostat extends TadoDevice {
 	}
 
 	triggerFlowSolarIntensity( device, tokens ) {
-		this._flowTriggerOutsideTemperature.trigger( device, tokens ).catch( this.error )
+		this._flowTriggerSolarIntensity.trigger( device, tokens ).catch( this.error )
 	}
 
 	triggerFlowWeather( device, tokens, state ) {
@@ -313,19 +313,19 @@ class TadoDeviceThermostat extends TadoDevice {
 
 	_onWeather( state ) {
 		if( this.hasCapability('measure_temperature.outside') && state.outsideTemperature ){
-			var value = Math.round( 10 * state.outsideTemperature.celsius )/10
-			if(this.getCapabilityValue('measure_temperature.outside') !== value ){
-				tadoSub.doLog( 'Flow trigger for ' + this.getName() + ': outsideTemperature changed to: ' + value)
-				this.triggerFlowOutsideTemperature( this, {'temperature': value } )
+			const value = Number(state.outsideTemperature.celsius);
+			if( this.getCapabilityValue('measure_temperature.outside') !== value ){
+				tadoSub.doLog('Flow trigger for ' + this.getName() + ': outsideTemperature changed to: ' + value)
+				this.triggerFlowOutsideTemperature( this, { 'temperature': value } )
 				this.setCapabilityValue('measure_temperature.outside', value ).catch( this.error );
 			}
 		}
 
 		if( this.hasCapability('solar_intensity') && state.solarIntensity ){
-			var value = Math.round( 10 * state.solarIntensity.percentage )/10
-			if(this.getCapabilityValue('solar_intensity') !== value ){
-				tadoSub.doLog( 'Flow trigger for ' + this.getName() + ': solarIntensity changed to: ' + value)
-				this.triggerFlowSolarIntensity( this, {'intensity': value } )
+			const value = Number(state.solarIntensity.percentage);
+			if( this.getCapabilityValue('solar_intensity') !== value ){
+				tadoSub.doLog('Flow trigger for ' + this.getName() + ': solarIntensity changed to: ' + value)
+				this.triggerFlowSolarIntensity( this, { 'intensity': value } )
 				this.setCapabilityValue('solar_intensity', value ).catch( this.error );
 			}
 		}
