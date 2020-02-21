@@ -77,19 +77,6 @@ Various capabilities are available for information and Flow control:
   _Home Zone_
   * General Home/Away status changes.
     - token: 'somebody is at home', true or false
-  * Mobile Home/Away status changes. [select mobile device]
-    - token: 'at home', true or false
-  * Location-based control changes. [select mobile device]
-    - token: 'location-based control enabled', true or false
-  * Distance changes. [select mobile device]
-    tokens:
-    - 'kilometers from Home Area', 0 - 4000+
-    - 'miles from Home Area', 0 - 2500+
-    - 'relative distance from Home Area', 0 - 1, several decimals.
-  * Timer expires since last location update [select mobile device, set time, set trigger repeats]
-    - token: 'minutes (updated at repeat)'
-  * Location validity changes. [select mobile device] (invalid = no location update for a very long time)
-    - token: 'valid', true or false
   * Outside temperature changes.
     - token: 'temperature'
   * Solar intensity changes.
@@ -115,12 +102,6 @@ Various capabilities are available for information and Flow control:
 
   _Home Zone_
   * Someone / Nobody is at home
-  * Is at home / away [Select mobile device]
-  * Location-based control is on / off for... [Select mobile device]
-  * Distance in kilometers is between / not between [Select mobile device and set values]
-  * Relative distance is between / not between [Select mobile device and set values]
-  * Location updated / not updated in the past time [Select mobile device and set time]
-  * Location is valid / invalid for... [Select mobile device]
   * Outside temperature is / is not between... [set values]
   * Solar intensity is / is not between... [set values]
   * Weather condition is / is not... [select from 19 weather conditions]
