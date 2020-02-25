@@ -105,38 +105,6 @@ exports.getAircoModes = function( args, possibleModes ){
   return arrayAutocomplete;
 }
 
-exports.getAutocompleteMobileDevices = function(args){
-  var arrayAutocomplete = [];
-
-  args.device.getStoreValue('mobileDevices').forEach(function(item){
-    if( item.settings.geoTrackingEnabled){ // LBC = on
-      if(item.location !== null && item.location !== undefined){ // connection = ok (<35 hours)
-        if(item.location.stale === false){ // location = ?
-          if(item.location.atHome === true){ // device = at home
-            var mobileIcon = 'location_home.svg';
-          } else { // device = away
-            var mobileIcon = 'location_away.svg';
-          }
-        } else { // LBC = on, but no ? for 35 hours or more
-          var mobileIcon = 'location_stale.svg';
-        }
-      } else { // LBC is/was on, but no location update to tado server for 48 hours or more
-        var mobileIcon = 'location_null.svg';
-      }
-    } else { // LBC = off
-      var mobileIcon = 'location_off.svg';
-    }
-    mobileIcon = '/app/com.tado/drivers/thermostat/assets/' + mobileIcon;
-    arrayAutocomplete.push({
-      icon: mobileIcon,
-      name: item.name,
-      id: item.id
-    });
-
-  });
-  return arrayAutocomplete;
-}
-
 exports.getAutocompleteMobileDevicesLocationBased = function(args){
   var arrayAutocomplete = [];
   args.device.getStoreValue('mobileDevices').forEach(function(item){
