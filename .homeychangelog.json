@@ -7,5 +7,8 @@
   },
   "3.0.6": {
     "en": "Bugfixes. Added correct Brandcolor."
+  },
+  "3.0.7": {
+    "en": "Enable repair for existing devices."
   }
 }
