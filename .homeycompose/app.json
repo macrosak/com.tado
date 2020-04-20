@@ -30,8 +30,8 @@
     ]
   },
   "category": "climate",
-  "version": "3.0.7",
-  "compatibility": ">=1.5.0",
+  "version": "3.0.8",
+  "compatibility": ">=4.1.0",
   "author": {
     "name": "Athom B.V."
   },

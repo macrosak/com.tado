@@ -10,5 +10,8 @@
   },
   "3.0.7": {
     "en": "Enable repair for existing devices."
+  },
+  "3.0.8": {
+    "en": "Small bugfixes"
   }
 }
