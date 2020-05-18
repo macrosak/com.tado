@@ -18,7 +18,7 @@ class TadoApp extends OAuth2App {
 
 	onOAuth2Init() {
   	
-  	//this.enableOAuth2Debug();
+  	this.enableOAuth2Debug();
   	this.setOAuth2Config({
     	client: TadoOAuth2Client,
     	apiUrl: 'https://my.tado.com/api/v2',

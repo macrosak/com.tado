@@ -1,0 +1,17 @@
+{
+  "3.0.4": {
+    "en": "Fixed Tado Home capability. Removed Tado mobile device support."
+  },
+  "3.0.5": {
+    "en": "Enable oauth logging."
+  },
+  "3.0.6": {
+    "en": "Bugfixes. Added correct Brandcolor."
+  },
+  "3.0.7": {
+    "en": "Enable repair for existing devices."
+  },
+  "3.0.8": {
+    "en": "Small bugfixes"
+  }
+}

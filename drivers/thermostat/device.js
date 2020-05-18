@@ -1,7 +1,6 @@
 'use strict';
 
 const tadoSub = require('./tadoAdditional');
-const TadoInsights = require('./tadoMobileInsights');
 const TadoDevice = require('../../lib/TadoDevice');
 const Homey = require('homey');
 
@@ -46,67 +45,7 @@ class TadoDeviceThermostat extends TadoDevice {
 					return Promise.resolve(tadoSub.getAutocompleteWeatherCondition(args) );
 				});
 
-		this._flowTriggerPresence = new Homey.FlowCardTriggerDevice('presence_status').register();
-
-		this._flowTriggerMobileGeoTrackingEnabled = new Homey.FlowCardTriggerDevice('mobile_tracking_changed');
-		this._flowTriggerMobileGeoTrackingEnabled.register()
-			.registerRunListener(( args, state ) => {
-				return Promise.resolve( args.mobile_device_selection.id === state.mobile_id );
-			})
-			.getArgument('mobile_device_selection')
-				.registerAutocompleteListener(( query, args ) => {
-					return Promise.resolve(tadoSub.getAutocompleteMobileDevices(args) );
-				});
-
-		this._flowTriggerMobileLocation = new Homey.FlowCardTriggerDevice('mobile_location_null_changed')
-		this._flowTriggerMobileLocation.register()
-			.registerRunListener(( args, state ) => {
-				return Promise.resolve( args.mobile_device_selection.id === state.mobile_id );
-			})
-			.getArgument('mobile_device_selection')
-				.registerAutocompleteListener(( query, args ) => {
-					return Promise.resolve(tadoSub.getAutocompleteMobileDevicesLocationBased(args) );
-				});
-
-		this._flowTriggerMobileTimeSinceLocation = new Homey.FlowCardTriggerDevice('mobile_time_since_location')
-		this._flowTriggerMobileTimeSinceLocation.register()
-			.registerRunListener(( args, state ) => {
-				var minToGo = Number((args.time_out).substr(0,2)) * 60 + Number((args.time_out).substr(3,2)) - state.minutes_since_location,
-						minutesRepeat = Number(args.repeat);
-				switch(minutesRepeat){
-					case 0: var timeValid = (minToGo === 0); break;
-					default: var timeValid = ( minToGo <= 0 && ( minToGo % minutesRepeat === 0 ) ); break;
-				}
-				return Promise.resolve( args.mobile_device_selection.id === state.mobile_id  && timeValid );
-			})
-			.getArgument('mobile_device_selection')
-				.registerAutocompleteListener(( query, args ) => {
-					return Promise.resolve(tadoSub.getAutocompleteMobileDevicesLocationBased(args) );
-				});
-
-		this._flowTriggerMobileAtHome = new Homey.FlowCardTriggerDevice('mobile_athome_changed');
-		this._flowTriggerMobileAtHome.register()
-			.registerRunListener(( args, state ) => {
-				return Promise.resolve( args.mobile_device_selection.id === state.mobile_id );
-			})
-			.getArgument('mobile_device_selection')
-				.registerAutocompleteListener(( query, args ) => {
-					return Promise.resolve(tadoSub.getAutocompleteMobileDevicesLocationBased(args) );
-				});
-
-		this._flowTriggerMobileRelativeDistanceFromHomeFence = new Homey.FlowCardTriggerDevice('mobile_distance_changed');
-		this._flowTriggerMobileRelativeDistanceFromHomeFence.register()
-		.registerRunListener(( args, state ) => {
-				return Promise.resolve( args.mobile_device_selection.id === state.mobile_id );
-			})
-			.getArgument('mobile_device_selection')
-				.registerAutocompleteListener(( query, args ) => {
-					return Promise.resolve(tadoSub.getAutocompleteMobileDevicesLocationBased(args) );
-				});
-
 	}
-	
-	
 
 	triggerFlowTargetOnOff( device, tokens ) {
 		this._flowTriggerTargetOnOff.trigger( device, tokens ).catch( this.error )
@@ -137,41 +76,16 @@ class TadoDeviceThermostat extends TadoDevice {
 	}
 
 	triggerFlowSolarIntensity( device, tokens ) {
-		this._flowTriggerOutsideTemperature.trigger( device, tokens ).catch( this.error )
+		this._flowTriggerSolarIntensity.trigger( device, tokens ).catch( this.error )
 	}
 
 	triggerFlowWeather( device, tokens, state ) {
 		this._flowTriggerWeather.trigger( device, tokens, state ).catch( this.error )
 	}
 
-	triggerFlowPresence( device, tokens ) {
-		this._flowTriggerPresence.trigger( device, tokens ).catch( this.error )
+	triggerFlowBatteryChange( device, tokens) {
+		this._flowTriggerBatteryChange.trigger( device, tokens ).catch( this.error );
 	}
-
-	triggerFlowBatteryChange( device, tokens ) {
-		this._flowTriggerBatteryChange.trigger( device, tokens ).catch( this.error )
-	}
-
-	triggerFlowMobileGeoTrackingEnabled( device, tokens, state ) {
-		this._flowTriggerMobileGeoTrackingEnabled.trigger( device, tokens, state ).catch( this.error )
-	}
-
-	triggerFlowMobileLocation( device, tokens, state ) {
-		this._flowTriggerMobileLocation.trigger( device, tokens, state ).catch( this.error )
-	}
-
-	triggerFlowMobileTimeSinceLocation( device, tokens, state ) {
-		this._flowTriggerMobileTimeSinceLocation.trigger( device, tokens, state ).catch( this.error )
-	}
-
-	triggerFlowMobileAtHome( device, tokens, state ) {
-		this._flowTriggerMobileAtHome.trigger( device, tokens, state ).catch( this.error )
-	}
-
-	triggerFlowMobileRelativeDistanceFromHomeFence( device, tokens, state ) {
-		this._flowTriggerMobileRelativeDistanceFromHomeFence.trigger( device, tokens, state ).catch( this.error )
-	}
-
 
 	_onState( state ) {
 		// get first time poll info before polling with longer intervals
@@ -216,16 +130,6 @@ class TadoDeviceThermostat extends TadoDevice {
 				this.setCapabilityValue('detect_open_window', value ).catch( this.error );
 			}
 		}
-/*
-		if( this.hasCapability('smart_heating') ){
-			var value = (state.overlayType !== 'MANUAL')
-			if(this.getCapabilityValue('smart_heating') !== value && value !== undefined ){
-				tadoSub.doLog( 'Flow trigger for ' + this.getName() + ': Smart Schedule changed to: ' + value)
-				this.triggerFlowSmartHeating( this, {'detection': value } )
-				this.setCapabilityValue('smart_heating', value ).catch( this.error );
-			}
-		}
-*/
 
 		if( this.hasCapability('smart_heating') ){
 			var value = (state.overlayType !== 'MANUAL')
@@ -235,7 +139,6 @@ class TadoDeviceThermostat extends TadoDevice {
 				this.setCapabilityValue('smart_heating', value ).catch( this.error );
 			}
 		}
-
 
 		if( this.hasCapability('airco_mode') ){
 			var value = state.setting.power
@@ -313,19 +216,19 @@ class TadoDeviceThermostat extends TadoDevice {
 
 	_onWeather( state ) {
 		if( this.hasCapability('measure_temperature.outside') && state.outsideTemperature ){
-			var value = Math.round( 10 * state.outsideTemperature.celsius )/10
-			if(this.getCapabilityValue('measure_temperature.outside') !== value ){
-				tadoSub.doLog( 'Flow trigger for ' + this.getName() + ': outsideTemperature changed to: ' + value)
-				this.triggerFlowOutsideTemperature( this, {'temperature': value } )
+			const value = Number(state.outsideTemperature.celsius);
+			if( this.getCapabilityValue('measure_temperature.outside') !== value ){
+				tadoSub.doLog('Flow trigger for ' + this.getName() + ': outsideTemperature changed to: ' + value)
+				this.triggerFlowOutsideTemperature( this, { 'temperature': value } )
 				this.setCapabilityValue('measure_temperature.outside', value ).catch( this.error );
 			}
 		}
 
 		if( this.hasCapability('solar_intensity') && state.solarIntensity ){
-			var value = Math.round( 10 * state.solarIntensity.percentage )/10
-			if(this.getCapabilityValue('solar_intensity') !== value ){
-				tadoSub.doLog( 'Flow trigger for ' + this.getName() + ': solarIntensity changed to: ' + value)
-				this.triggerFlowSolarIntensity( this, {'intensity': value } )
+			const value = Number(state.solarIntensity.percentage);
+			if( this.getCapabilityValue('solar_intensity') !== value ){
+				tadoSub.doLog('Flow trigger for ' + this.getName() + ': solarIntensity changed to: ' + value)
+				this.triggerFlowSolarIntensity( this, { 'intensity': value } )
 				this.setCapabilityValue('solar_intensity', value ).catch( this.error );
 			}
 		}
@@ -367,204 +270,6 @@ class TadoDeviceThermostat extends TadoDevice {
 			}
 		}
 	}
-
-	_onMobileDevices( state ) {
-		if( this._type == 'TADO_HOME' ){
-			var tadoInsights = new TadoInsights;
-
-			tadoInsights.cleanMobileInsights( state );
-
-			// get some first time poll info before polling with longer intervals
-			if( this.hasCapability('weather_state') ){
-				if(this.getCapabilityValue('weather_state') == undefined ){
-						this.getWeather()
-							.catch( this.error );
-				}
-			}
-
-			var currentTimeStamp = new Date().getTime();
-
-			var mobileDevicesBefore = this.getStoreValue('mobileDevices');
-			if( mobileDevicesBefore === null ){ // first time run
-				mobileDevicesBefore = state.slice();
-				mobileDevicesBefore.forEach(function( mobileDevice, mobileIndex ){
-					mobileDevicesBefore[mobileIndex] = {
-						name: mobileDevice.name,
-						id: mobileDevice.id,
-						settings: { geoTrackingEnabled: false },
-						deviceMetadata: {
-							platform: mobileDevice.deviceMetadata.platform,
-							osVersion: mobileDevice.deviceMetadata.osVersion,
-							model: mobileDevice.deviceMetadata.model,
-							locale: mobileDevice.deviceMetadata.locale
-						},
-						lastChangeTimeStamp: currentTimeStamp,
-						minutesSinceLocation: 0
-					}
-				});
-			}
-
-
-			for(var indexState = 0; indexState < state.length; indexState++ ){
-				var itemState = state[indexState];
-
-				itemState.lastChangeTimeStamp = currentTimeStamp
-				itemState.minutesSinceLocation = 0;
-
-				for(var indexBefore = 0; indexBefore < mobileDevicesBefore.length; indexBefore++ ){
-					var itemPrevious = mobileDevicesBefore[indexBefore]
-
-					if( itemState.id === itemPrevious.id ){
-						var mobileLocationUpdated = false, // set true if mobile location data changes
-								minSinceLocation = Math.floor((currentTimeStamp - itemPrevious.lastChangeTimeStamp) / 60000);
-
-						itemState.lastChangeTimeStamp = itemPrevious.lastChangeTimeStamp
-						itemState.minutesSinceLocation = itemPrevious.minutesSinceLocation
-						if( minSinceLocation !== Number( itemPrevious.minutesSinceLocation ) ){
-							itemState.minutesSinceLocation = minSinceLocation;
-							tadoSub.doLog( 'Flow trigger for ' + this.getName() + ': minutesSinceLocation changed to: ' + minSinceLocation + ' for ' + itemState.name);
-							this.triggerFlowMobileTimeSinceLocation(
-								this,
-								{ 'minutes_since_location': minSinceLocation },
-								{ 'mobile_id': itemState.id, 'minutes_since_location': minSinceLocation }
-							)
-						}
-
-						// check for changes in geoTrackingEnabled
-						if( itemState.settings.geoTrackingEnabled !== itemPrevious.settings.geoTrackingEnabled ){
-							mobileLocationUpdated = true;
-							tadoSub.doLog( 'Flow trigger for ' + this.getName() + ': GeoTrackingEnabled changed to: ' + itemState.settings.geoTrackingEnabled + ' for ' + itemState.name);
-							tadoInsights.mobileEntry( itemState, 'geoTrackingEnabled' )
-							this.triggerFlowMobileGeoTrackingEnabled(
-								this,
-								{ 'mobile_geoTrackingEnabled': itemState.settings.geoTrackingEnabled },
-								{ 'mobile_id': itemState.id }
-							)
-						}
-
-						if( itemState.settings.geoTrackingEnabled && itemState.location !== undefined){ // if geoTrackingEnabled...
-							tadoInsights.createInitialMobileInsights( itemState )
-							// check for location change (valid / null)
-							if( ( itemState.location !== null ) !== ( itemPrevious.location !== null ) ){ // change from valid -> null or null -> valid
-								var validLocation = ( itemState.location !== null );
-								tadoSub.doLog( 'Flow trigger for ' + this.getName() + ': valid location changed to: ' + validLocation + ' for ' + itemState.name);
-								this.triggerFlowMobileLocation(
-									this,
-									{ 'mobile_location': validLocation }
-								)
-							}
-
-							if ( itemState.location === null ){ // invalid location
-								// ...
-							} else { // valid location
-								if( itemPrevious.location === undefined ||  itemPrevious.location === null ){ // itemPrevious.location = invalid
-									// trigger all location-related flows.
-									tadoSub.doLog( 'Flow trigger for ' + this.getName() + ': atHome changed to: ' + itemState.location.atHome + ' for ' + itemState.name);
-									tadoInsights.mobileEntry( itemState, 'atHome' )
-									this.triggerFlowMobileAtHome(
-										this,
-										{ 'mobile_athome': itemState.location.atHome },
-										{ 'mobile_id': itemState.id }
-									)
-
-									var rel = Number(itemState.location.relativeDistanceFromHomeFence),
-											km = tadoSub.convertRelativeToKilometer(rel),
-											mi = tadoSub.convertKilometerToMile(km);
-
-									tadoSub.doLog( 'Flow trigger for ' + this.getName() + ': relativeDistanceFromHomeFence changed to: ' + rel + ' (' + km + 'km)' + ' for ' + itemState.name);
-									tadoInsights.mobileEntry( itemState, 'distanceFromHomeFence' )
-									this.triggerFlowMobileRelativeDistanceFromHomeFence(
-										this,
-										{ 'mobile_distance': itemState.location.relativeDistanceFromHomeFence },
-										{ 'mobile_id': itemState.id }
-									)
-
-								} else { // itemPrevious.location = valid
-
-									// check for atHome change
-									if( itemState.location.atHome !== itemPrevious.location.atHome ){
-										mobileLocationUpdated = true;
-										tadoSub.doLog( 'Flow trigger for ' + this.getName() + ': atHome changed to: ' + itemState.location.atHome + ' for ' + itemState.name);
-										tadoInsights.mobileEntry( itemState, 'atHome' )
-										this.triggerFlowMobileAtHome(
-											this,
-											{ 'mobile_athome': itemState.location.atHome },
-											{ 'mobile_id': itemState.id }
-										)
-									}
-
-									// check for relativeDistanceFromHomeFence change
-									if( itemState.location.relativeDistanceFromHomeFence !== itemPrevious.location.relativeDistanceFromHomeFence ){
-										mobileLocationUpdated = true;
-										var rel = Number(itemState.location.relativeDistanceFromHomeFence),
-												km = tadoSub.convertRelativeToKilometer(rel),
-												mi = tadoSub.convertKilometerToMile(km);
-
-										tadoSub.doLog( 'Flow trigger for ' + this.getName() + ': relativeDistanceFromHomeFence changed to: ' + rel + ' (' + km + 'km)' + ' for ' + itemState.name);
-										tadoInsights.mobileEntry( itemState, 'distanceFromHomeFence' )
-										this.triggerFlowMobileRelativeDistanceFromHomeFence(
-											this,
-											{
-												'mobile_distance': rel,
-												'mobile_kilometers': km,
-												'mobile_miles': mi
-											},
-											{ 'mobile_id': itemState.id }
-										)
-									} else if( itemState.location.bearingFromHome.degrees !== itemPrevious.location.bearingFromHome.degrees
-													|| itemState.location.bearingFromHome.radians !== itemPrevious.location.bearingFromHome.radians ){
-										// detect directional change (bearingFromHome) to assist in this mobile device's mobileLocationUpdated.
-										tadoSub.doLog( itemState.name + ': location.bearingFromHome change. degrees:' + itemPrevious.location.bearingFromHome.degrees + ', radians:' + itemState.location.bearingFromHome.radians)
-										mobileLocationUpdated = true;
-										var km = tadoSub.convertRelativeToKilometer( Number(itemState.location.relativeDistanceFromHomeFence) )
-										tadoInsights.mobileEntry( itemState, 'distanceFromHomeFence' )
-									}
-
-								}
-							}
-						}
-
-						if(mobileLocationUpdated){ // set lastChangeTimeStamp
-							itemState.lastChangeTimeStamp = currentTimeStamp;
-							itemState.minutesSinceLocation = 0;
-						}
-
-					}
-				} // end loop: for(var indexBefore...
-				state[indexState] = itemState;
-			} //end loop: for(var indexState...
-
-			this.setStoreValue('mobileDevices', state, function(err, store) {
-				if(err) { console.error(err) }
-			})
-
-			// general presence_status
-			var value = false; // false = everyone is out, true =  someone is at home
-			var geoOn = false; // true = at least one phone/tablet with location based control
-			state.forEach(function(item, index){
-				if(item.settings.geoTrackingEnabled){ // LBC enabled
-					if(item.location !== null && item.location !== undefined){ // null = no connection for at least about 35 hours
-						if(item.location.stale === false){ // false = location is 'fresh'
-							value = (value || item.location.atHome)
-							geoOn = true;
-						}
-					}
-				}
-			});
-			if(geoOn === false){ // no mobile device with valid LBC
-				value = true; // act like someone is at home. (default when LBC is not used by any phone/tablet)
-			}
-			if(this.hasCapability('presence_status')) {
-  			if(this.getCapabilityValue('presence_status') !== value ){
-  				tadoSub.doLog( 'Flow trigger for ' + this.getName() + ': Presence changed to: ' + value )
-  				this.triggerFlowPresence( this, {'presence': value } )
-  				this.setCapabilityValue('presence_status', value ).catch( this.error );
-  			}
-			}
-		}
-
-	}
-
 
 	_onZonesInfo( state ) { // check battery state
 		if( this.hasCapability('battery_state') ){
@@ -733,7 +438,6 @@ class TadoDeviceThermostat extends TadoDevice {
 		}
 		return true;
 	}
-
 
 	async onFlowActionSetSmart() {
 		return this.oAuth2Client.unsetOverlay( this._homeId, this._zoneId);
@@ -934,7 +638,6 @@ class TadoDeviceThermostat extends TadoDevice {
 			"termination": { "type": "TADO_MODE" }
 		});
 	}
-
 
 	async _onCapabilityTargetTemperature( value ) {
 		switch(this._type){
