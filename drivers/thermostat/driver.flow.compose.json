@@ -201,28 +201,6 @@
 			"$filter": "capabilities=battery_state"
 		},
 		{
-			"id": "presence_status",
-			"title": {
-				"en": "General Home/Away status changes",
-				"nl": "Algemene Thuis/Afwezig status verandert"
-			},
-			"hint": {
-				"en": "This card starts a Flow when the general tado° Home/Away status changes.",
-				"nl": "Dit kaartje start een Flow wanneer de algemene tado° Thuis/Afwezig status verandert."
-			},
-			"tokens": [
-				{
-					"name": "presence",
-					"type": "boolean",
-					"title": {
-						"en": "somebody is at home (true or false)",
-						"nl": "iemand is thuis (waar of niet waar)"
-					}
-				}
-			],
-			"$filter": "capabilities=presence_status"
-		},
-		{
 			"id": "outside_temperature",
 			"title": {
 				"en": "Outside temperature changes",
@@ -494,18 +472,6 @@
 				"nl": "Gebruik dit kaartje om te bepalen of de batterijen goed zijn of bijna leeg."
 			},
 			"$filter": "capabilities=battery_state"
-		},
-		{
-			"id": "presence_status",
-			"title": {
-				"en": "!{{Someone is at home|Nobody is at home}}",
-				"nl": "!{{Iemand is thuis|Niemand is thuis}}"
-			},
-			"hint": {
-				"en": "Use this card to determine whether someone is at home or not.",
-				"nl": "Gebruik dit kaartje om te bepalen of er iemand thuis is of niet."
-			},
-			"$filter": "capabilities=presence_status"
 		},
 		{
 			"id": "measure_temperature_outside_between",

@@ -121,12 +121,6 @@ class TadoDriverThermostat extends TadoDriver {
 				return tadoSub.getAutocompleteWeatherCondition(args);
       });
 
-		new Homey.FlowCardCondition('presence_status')
-			.register()
-			.registerRunListener( async (args, state) => {
-				return args.device.getCapabilityValue('presence_status');
-			});
-
 		new Homey.FlowCardAction('set_smart')
 			.register()
 			.registerRunListener(args => args.device.onFlowActionSetSmart());
