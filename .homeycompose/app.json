@@ -15,8 +15,7 @@
       "radiator thermostat",
       "heating",
       "hot water",
-      "air conditioning",
-      "presence"
+      "air conditioning"
     ],
     "nl": [
       "tado",
@@ -25,8 +24,7 @@
       "verwarming",
       "warm water",
       "air conditioning",
-      "airco",
-      "aanwezigheid"
+      "airco"
     ]
   },
   "category": "climate",

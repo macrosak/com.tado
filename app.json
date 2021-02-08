@@ -16,8 +16,7 @@
       "radiator thermostat",
       "heating",
       "hot water",
-      "air conditioning",
-      "presence"
+      "air conditioning"
     ],
     "nl": [
       "tado",
@@ -26,8 +25,7 @@
       "verwarming",
       "warm water",
       "air conditioning",
-      "airco",
-      "aanwezigheid"
+      "airco"
     ]
   },
   "category": "climate",
@@ -1104,15 +1102,6 @@
       "step": 1,
       "min": 0,
       "max": 100
-    },
-    "presence_status": {
-      "type": "boolean",
-      "title": {
-        "en": "Home / Away",
-        "nl": "Thuis / Afwezig"
-      },
-      "getable": true,
-      "setable": true
     },
     "smart_heating": {
       "type": "boolean",

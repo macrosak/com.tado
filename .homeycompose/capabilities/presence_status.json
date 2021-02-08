@@ -1,9 +1,0 @@
-{
-	"type": "boolean",
-	"title": {
-		"en": "Home / Away",
-		"nl": "Thuis / Afwezig"
-	},
-	"getable": true,
-	"setable": true
-}
