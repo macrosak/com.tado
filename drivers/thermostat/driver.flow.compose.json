@@ -46,6 +46,42 @@
 			"$filter": "capabilities=measure_temperature.inside"
 		},
 		{
+			"id": "thermostat_set_operation_mode",
+			"title": {
+				"en": "Set mode",
+				"nl": "Stel modus in"
+			},
+			"$filter": "capabilities=operation_mode",
+			"args": [
+				{
+					"name": "mode",
+					"type": "dropdown",
+					"values": [
+						{
+							"id": "SCHEDULE",
+							"label": {
+								"en": "Program",
+								"nl": "Programma"
+							}
+						},
+						{
+							"id": "MANUAL",
+							"label": {
+								"en": "Manual",
+								"nl": "Handmatig"
+							}
+						},
+						{
+							"id": "UNTIL_CHANGE",
+							"label": {
+								"en": "Untill Change"
+							}
+						}
+					]
+				}
+			]
+		},
+		{
 			"id": "humidity",
 			"title": {
 				"en": "Humidity changes",

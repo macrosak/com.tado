@@ -144,6 +144,10 @@ class TadoDeviceThermostat extends TadoDevice {
       }
     }
 
+    if (typeof state.overlay.termination.type === 'string' && this.hasCapability('operation_mode')) {
+      this.setCapabilityValue('operation_mode', state.overlay.termination.type).catch(this.error);
+    }
+
     if (this.hasCapability('airco_mode')) {
       var value = state.setting.power;
       if (value == 'ON') {
@@ -461,19 +465,17 @@ class TadoDeviceThermostat extends TadoDevice {
   }
 
   async setThermMode({ mode }) {
-
-	switch (overlayType) {
-		case 'schedule':
-			return this.onFlowActionSetOffSmartSchedule();
-		case 'manual':
-			return this.onFlowActionSetOff();
-		// case 'timer':
-		case 'untill-change':
-			return this.onFlowActionSetOffUntilSmart();
-		default: 
+    switch (overlayType) {
+      case 'schedule':
+        return this.onFlowActionSetOffSmartSchedule();
+      case 'manual':
+        return this.onFlowActionSetOff();
+        // case 'timer':
+      case 'untill-change':
+        return this.onFlowActionSetOffUntilSmart();
+      default:
 			// do nothing
-
-	}
+    }
     return this.oAuth2Client.setThermMode({
       mode,
       homeId: this.homeId,
