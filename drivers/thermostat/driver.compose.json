@@ -3,7 +3,8 @@
 	"capabilities": [
 		"measure_temperature",
 		"measure_humidity",
-		"target_temperature"
+		"target_temperature",
+		"operation_mode"
 	],
 	"name": {
 		"en": "tado° zones",

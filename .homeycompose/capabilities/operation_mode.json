@@ -1,0 +1,35 @@
+{
+	"title": {
+		"en": "Operation Mode"
+	},
+	"type": "enum",
+	"getable": true,
+	"setable": true,
+	"uiComponent": "picker",
+	"values": [
+		{
+		  "id": "schedule",
+		  "title": {
+			"en": "Schedule"
+		  }
+		},
+		{
+		  "id": "manual",
+		  "title": {
+			"en": "Manual"
+		  }
+		},
+		{
+		  "id": "timer",
+		  "title": {
+			"en": "Timer"
+		  }
+		},
+		{
+		  "id": "untill-change",
+		  "title": {
+			"en": "Untill Change"
+		  }
+		}
+	  ]
+}
