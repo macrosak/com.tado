@@ -20,12 +20,6 @@
 		  }
 		},
 		{
-		  "id": "timer",
-		  "title": {
-			"en": "Timer"
-		  }
-		},
-		{
 		  "id": "untill-change",
 		  "title": {
 			"en": "Untill Change"
