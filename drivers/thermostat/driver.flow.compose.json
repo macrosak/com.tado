@@ -76,6 +76,13 @@
 							"label": {
 								"en": "Until Change"
 							}
+						},
+						{
+							"id": "OFF",
+							"title": {
+								"en": "Off",
+								"nl": "Uit"
+							}
 						}
 					]
 				}

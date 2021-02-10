@@ -13,7 +13,7 @@ class TadoDeviceThermostat extends TadoDevice {
 
     this.registerCapabilityListener('target_temperature', this._onCapabilityTargetTemperature.bind(this));
     this.registerCapabilityListener('target_onoff', this._onCapabilityTargetOnOff.bind(this));
-    this.registerCapabilityListener('tado_smart', this._onCapabilityTadoAuto.bind(this));
+    // this.registerCapabilityListener('tado_smart', this._onCapabilityTadoAuto.bind(this));
 
     this._flowTriggerTargetOnOff = new Homey.FlowCardTriggerDevice('target_onoff').register();
     this._flowTriggerHumidity = new Homey.FlowCardTriggerDevice('humidity').register();
@@ -144,8 +144,12 @@ class TadoDeviceThermostat extends TadoDevice {
       }
     }
 
-    if (typeof state.overlay.termination.type === 'string' && this.hasCapability('operation_mode')) {
-      this.setCapabilityValue('operation_mode', state.overlay.termination.type).catch(this.error);
+    if (state.overlay !== null && typeof state.overlay.termination.type === 'string' && this.hasCapability('operation_mode')) {
+      if (state.setting.power === 'ON') {
+        this.setCapabilityValue('operation_mode', state.overlay.termination.type).catch(this.error);
+      } else {
+        this.setCapabilityValue('operation_mode', 'OFF').catch(this.error);
+      }
     }
 
     if (this.hasCapability('airco_mode')) {
@@ -464,126 +468,119 @@ class TadoDeviceThermostat extends TadoDevice {
     return this.setThermMode({ mode: value });
   }
 
-  async setThermMode({ mode }) {
-    switch (mode) {
-      case 'SCHEDULE':
-        return this.onFlowActionSetOffSmartSchedule();
-      case 'MANUAL':
-        return this.onFlowActionSetOff();
-        // case 'timer':
-      case 'UNTIL_CHANGE':
-        return this.onFlowActionSetOffUntilSmart();
-      default:
-			// do nothing
+  // This function breaks the app.
+  // async onFlowActionSetSmart() {
+  //   return this.oAuth2Client.unsetOverlay(this._homeId, this._zoneId);
+  // }
+
+  async onFlowActionSetManual(state, args) {
+    let tCelsius = Number(args.temperature.celsius);
+
+    let objSetting = {
+      setting: {
+        type: this._type,
+        power: state
+      },
+      termination: {
+        type: 'MANUAL',
+      },
+    };
+
+    if (state === 'ON') {
+      objSetting.type = 'MANUAL';
+      objSetting.setting.temperature = { celsius: tCelsius };
     }
+
+    return this.oAuth2Client.setOverlay(this._homeId, this._zoneId, objSetting);
   }
 
-  async onFlowActionSetSmart() {
-    return this.oAuth2Client.unsetOverlay(this._homeId, this._zoneId);
-  }
-
-  async onFlowActionSetOn() {
-    // - On Until user intervention, for dev without thermostat
-    return this.oAuth2Client.setOverlay(this._homeId, this._zoneId, {
+  async onFlowActionSetUntilTimer(state, args) {
+    let tCelsius = Number(args.temperature.celsius);
+    let objSetting = { 
+      type: 'MANUAL',
       setting: {
         type: this._type,
-        power: 'ON',
-      },
-      termination: {
-        type: 'MANUAL',
-      },
-    });
-  }
-
-  async onFlowActionSetOnSmartSchedule() {
-    // - Off Until next Smart Schedule change
-    return this.oAuth2Client.setOverlay(this._homeId, this._zoneId, {
-      setting: {
-        type: this._type,
-        power: 'ON',
-      },
-      termination: {
-        type: 'SCHEDULE',
-      },
-    });
-  }
-
-  async onFlowActionSetOnUntilTimer(args) {
-    // - On Until set timer ends, for dev without thermostat
-    return this.oAuth2Client.setOverlay(this._homeId, this._zoneId, {
-      setting: {
-        type: this._type,
-        power: 'ON',
+        power: state,
+        temperature: { celsius: tCelsius },
       },
       termination: {
         type: 'TIMER',
         durationInSeconds: Number((args.timer_off).substr(0, 2)) * 3600 + Number((args.timer_off).substr(3, 2)) * 60,
       },
-    });
+    };
+    return this.oAuth2Client.setOverlay(this._homeId, this._zoneId, objSetting);
   }
 
-  async onFlowActionSetOnUntilSmart() {
-    // - On Until next Smart Schedule change, for dev without thermostat
-    return this.oAuth2Client.setOverlay(this._homeId, this._zoneId, {
+  async onFlowActionSetUntilSmart(state, args) {
+    let tCelsius = Number(args.temperature.celsius);
+    let objSetting = {
+      type: 'MANUAL',
       setting: {
         type: this._type,
-        power: 'ON',
+        power: state,
+        temperature: { celsius: tCelsius },
       },
       termination: {
         type: 'TADO_MODE',
       },
-    });
-  }
-
-  async onFlowActionSetOff() {
-    return this.oAuth2Client.setOverlay(this._homeId, this._zoneId, {
-      setting: {
-        type: this._type,
-        power: 'OFF',
-      },
-      termination: {
-        type: 'MANUAL',
-      },
-    });
-  }
-
-  async onFlowActionSetOffUntilTimer(args) {
-    return this.oAuth2Client.setOverlay(this._homeId, this._zoneId, {
-      setting: {
-        type: this._type,
-        power: 'OFF',
-      },
-      termination: {
-        type: 'TIMER',
-        durationInSeconds: Number((args.timer_off).substr(0, 2)) * 3600 + Number((args.timer_off).substr(3, 2)) * 60,
-      },
-    });
-  }
-
-  async onFlowActionSetOffUntilSmart() {
+    };
     // - Off Until next Smart Schedule change
-    return this.oAuth2Client.setOverlay(this._homeId, this._zoneId, {
-      setting: {
-        type: this._type,
-        power: 'OFF',
-      },
-      termination: {
-        type: 'TADO_MODE',
-      },
-    });
+    return this.oAuth2Client.setOverlay(this._homeId, this._zoneId, objSetting);
   }
 
-  async onFlowActionSetOffSmartSchedule() {
-    // - Off Until next Smart Schedule change
-    return this.oAuth2Client.setOverlay(this._homeId, this._zoneId, {
+  async onFlowActionSetSmartSchedule(state, args) {
+    let tCelsius = Number(args.temperature.celsius);
+    let objSetting = {
+      type: 'MANUAL',
       setting: {
         type: this._type,
-        power: 'OFF',
+        power: state,
+        temperature: { celsius: tCelsius },
       },
       termination: {
         type: 'SCHEDULE',
       },
-    });
+    };
+    // - Off Until next Smart Schedule change
+    return this.oAuth2Client.setOverlay(this._homeId, this._zoneId, objSetting);
+  }
+
+  async setThermMode({ mode }) {
+    this.oAuth2Client.getState(this._homeId, this._zoneId)
+      .then(state => {
+        this.setAvailable();
+        console.log(state);
+        let args = {
+          temperature: {
+            celsius: 20,
+          }
+        };
+
+        if (state.setting.type === 'HEATING' && state.setting.temperature !== null) {
+          args.temperature = {
+            celsius: state.setting.temperature.celsius
+          };
+        }
+
+        switch (mode) {
+          case 'SCHEDULE':
+            return this.onFlowActionSetSmartSchedule('ON', args);
+          case 'MANUAL':
+            return this.onFlowActionSetManual('ON', args);
+          case 'UNTIL_CHANGE':
+            return this.onFlowActionSetUntilSmart('ON', args);
+          case 'OFF':
+            return this.onFlowActionSetManual('OFF', args);
+            // case 'TIMER':
+          default:
+          // do nothing
+        }
+      })
+      .catch(err => {
+        this.error(err);
+        this.setUnavailable(err);
+        throw err;
+      });
   }
 
   async onFlowActionTemperatureUntilTimer(args) {
@@ -753,7 +750,7 @@ class TadoDeviceThermostat extends TadoDevice {
       setting: {
         type: this._type,
         power: xPower,
-        temperature: null,
+        temperature: { celsius: 20 },
       },
       termination: {
         type: 'MANUAL',
@@ -765,14 +762,14 @@ class TadoDeviceThermostat extends TadoDevice {
     });
   }
 
-  async _onCapabilityTadoAuto(value) {
-    if (!this.getCapabilityValue('smart_heating')) { // smart_heating false -> true
-      return this.oAuth2Client.unsetOverlay(this._homeId, this._zoneId).then(() => {
-        return this.getState();
-      });
-    } // smart_heating was true already
-    return this.getState();
-  }
+  // async _onCapabilityTadoAuto(value) {
+  //   if (!this.getCapabilityValue('smart_heating')) { // smart_heating false -> true
+  //     return this.oAuth2Client.unsetOverlay(this._homeId, this._zoneId).then(() => {
+  //       return this.getState();
+  //     });
+  //   } // smart_heating was true already
+  //   return this.getState();
+  // }
 
 }
 
