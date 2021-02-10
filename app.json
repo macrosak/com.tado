@@ -975,12 +975,12 @@
       {
         "id": "set_off_until_smart",
         "title": {
-          "en": "Disable zone until Smart Schedule changes",
-          "nl": "Schakel zone uit tot het Slimme Schema verandert"
+          "en": "Disable zone until smart mode is enabled",
+          "nl": "Schakel zone uit totdat smart mode is ingeschakeld"
         },
         "hint": {
-          "en": "This card disables this zone until Smart Schedule changes and takes control.",
-          "nl": "Dit kaartje schakelt deze zone uit totdat het Slimme Schema verandert en de controle overneemt."
+          "en": "This card disables this zone until the Smart Schedule takes control.",
+          "nl": "Dit kaartje schakelt deze zone uit totdat het Slimme Schema de controle overneemt."
         },
         "args": [
           {
@@ -991,20 +991,49 @@
         ]
       },
       {
-        "id": "set_smart",
+        "id": "thermostat_set_operation_mode",
         "title": {
-          "en": "Activate Smart Schedule",
-          "nl": "Activeer het Slimme Schema"
-        },
-        "hint": {
-          "en": "This card activates the Smart Schedule.",
-          "nl": "Dit kaartje activeert het Slimme Schema."
+          "en": "Set mode",
+          "nl": "Stel modus in"
         },
         "args": [
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=thermostat&capabilities=smart_heating"
+            "filter": "driver_id=thermostat&capabilities=operation_mode"
+          },
+          {
+            "name": "mode",
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "SCHEDULE",
+                "label": {
+                  "en": "Program",
+                  "nl": "Programma"
+                }
+              },
+              {
+                "id": "MANUAL",
+                "label": {
+                  "en": "Manual",
+                  "nl": "Handmatig"
+                }
+              },
+              {
+                "id": "UNTIL_CHANGE",
+                "label": {
+                  "en": "Until Change"
+                }
+              },
+              {
+                "id": "OFF",
+                "title": {
+                  "en": "Off",
+                  "nl": "Uit"
+                }
+              }
+            ]
           }
         ]
       }
@@ -1016,7 +1045,8 @@
       "capabilities": [
         "measure_temperature",
         "measure_humidity",
-        "target_temperature"
+        "target_temperature",
+        "operation_mode"
       ],
       "name": {
         "en": "tado° zones",
@@ -1057,7 +1087,8 @@
       "type": "string",
       "title": {
         "en": "Mode",
-        "nl": "Modus"
+        "nl": "Modus",
+        "de": "Modus"
       },
       "getable": true,
       "setable": false
@@ -1066,7 +1097,8 @@
       "type": "string",
       "title": {
         "en": "Battery",
-        "nl": "Batterij"
+        "nl": "Batterij",
+        "de": "Akku"
       },
       "getable": true,
       "setable": false
@@ -1075,7 +1107,8 @@
       "type": "boolean",
       "title": {
         "en": "Open window detection",
-        "nl": "Open raam detectie"
+        "nl": "Open raam detectie",
+        "de": "Offenes-Fenster-Erkennung"
       },
       "getable": true,
       "setable": false
@@ -1083,7 +1116,9 @@
     "heating_only": {
       "type": "boolean",
       "title": {
-        "en": "identify device without cooling"
+        "en": "identify device without cooling",
+        "nl": "Identificeer apparaat zonder koeling",
+        "de": "Gerät ohne Kühlung identifizieren"
       },
       "getable": true,
       "setable": true
@@ -1092,7 +1127,8 @@
       "type": "number",
       "title": {
         "en": "Heating capacity",
-        "nl": "Verwarming capaciteit"
+        "nl": "Verwarming capaciteit",
+        "de": "Heizkapazität"
       },
       "getable": true,
       "setable": false,
@@ -1103,11 +1139,56 @@
       "min": 0,
       "max": 100
     },
+    "operation_mode": {
+      "title": {
+        "en": "Mode",
+        "nl": "Modus"
+      },
+      "type": "enum",
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "values": [
+        {
+          "id": "SCHEDULE",
+          "title": {
+            "en": "Schedule",
+            "nl": "Programma",
+            "de": "Zeitplan"
+          }
+        },
+        {
+          "id": "MANUAL",
+          "title": {
+            "en": "Manual",
+            "nl": "Handmatig",
+            "de": "Manueller Betrieb"
+          }
+        },
+        {
+          "id": "UNTIL_CHANGE",
+          "title": {
+            "en": "Until Change",
+            "nl": "Tot Verandering",
+            "de": "Bis zur Veränderung"
+          }
+        },
+        {
+          "id": "OFF",
+          "title": {
+            "en": "Off",
+            "nl": "Uit",
+            "de": "Aus"
+          }
+        }
+      ]
+    },
     "smart_heating": {
       "type": "boolean",
       "title": {
         "en": "Smart Schedule",
-        "nl": "Slimme Schema"
+        "nl": "Slimme Schema",
+        "de": "Intelligenter Zeitplan"
       },
       "getable": true,
       "setable": true
@@ -1116,7 +1197,8 @@
       "type": "number",
       "title": {
         "en": "Solar intensity",
-        "nl": "Zonne-intensiteit"
+        "nl": "Zonne-intensiteit",
+        "de": "Sonnenintensität"
       },
       "getable": true,
       "setable": false,
@@ -1129,7 +1211,9 @@
     "tado_smart": {
       "type": "boolean",
       "title": {
-        "en": "Tado Smart"
+        "en": "Tado Smart",
+        "nl": "Tado Smart",
+        "de": "Tado Smart"
       },
       "getable": false,
       "setable": true
@@ -1137,7 +1221,9 @@
     "target_onoff": {
       "type": "boolean",
       "title": {
-        "en": "Aan"
+        "en": "On",
+        "nl": "Aan",
+        "de": "An"
       },
       "getable": true,
       "setable": true
@@ -1146,7 +1232,8 @@
       "type": "string",
       "title": {
         "en": "Weather",
-        "nl": "Weer"
+        "nl": "Weer",
+        "de": "Wetter"
       },
       "getable": true,
       "setable": false
