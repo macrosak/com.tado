@@ -46,49 +46,6 @@
 			"$filter": "capabilities=measure_temperature.inside"
 		},
 		{
-			"id": "thermostat_set_operation_mode",
-			"title": {
-				"en": "Set mode",
-				"nl": "Stel modus in"
-			},
-			"$filter": "capabilities=operation_mode",
-			"args": [
-				{
-					"name": "mode",
-					"type": "dropdown",
-					"values": [
-						{
-							"id": "SCHEDULE",
-							"label": {
-								"en": "Program",
-								"nl": "Programma"
-							}
-						},
-						{
-							"id": "MANUAL",
-							"label": {
-								"en": "Manual",
-								"nl": "Handmatig"
-							}
-						},
-						{
-							"id": "UNTIL_CHANGE",
-							"label": {
-								"en": "Until Change"
-							}
-						},
-						{
-							"id": "OFF",
-							"title": {
-								"en": "Off",
-								"nl": "Uit"
-							}
-						}
-					]
-				}
-			]
-		},
-		{
 			"id": "humidity",
 			"title": {
 				"en": "Humidity changes",
@@ -813,28 +770,47 @@
 			]
 		},
 		{
-			"id": "set_off_until_smart",
+			"id": "thermostat_set_operation_mode",
 			"title": {
-				"en": "Disable zone until Smart Schedule changes",
-				"nl": "Schakel zone uit tot het Slimme Schema verandert"
+				"en": "Set mode",
+				"nl": "Stel modus in"
 			},
-			"hint": {
-				"en": "This card disables this zone until Smart Schedule changes and takes control.",
-				"nl": "Dit kaartje schakelt deze zone uit totdat het Slimme Schema verandert en de controle overneemt."
-			},
-			"$filter": "capabilities=smart_heating"
-		},
-		{
-			"id": "set_smart",
-			"title": {
-				"en": "Activate Smart Schedule",
-				"nl": "Activeer het Slimme Schema"
-			},
-			"hint": {
-				"en": "This card activates the Smart Schedule.",
-				"nl": "Dit kaartje activeert het Slimme Schema."
-			},
-			"$filter": "capabilities=smart_heating"
+			"$filter": "capabilities=operation_mode",
+			"args": [
+				{
+					"name": "mode",
+					"type": "dropdown",
+					"values": [
+						{
+							"id": "SCHEDULE",
+							"label": {
+								"en": "Program",
+								"nl": "Programma"
+							}
+						},
+						{
+							"id": "MANUAL",
+							"label": {
+								"en": "Manual",
+								"nl": "Handmatig"
+							}
+						},
+						{
+							"id": "UNTIL_CHANGE",
+							"label": {
+								"en": "Until Change"
+							}
+						},
+						{
+							"id": "OFF",
+							"title": {
+								"en": "Off",
+								"nl": "Uit"
+							}
+						}
+					]
+				}
+			]
 		}
 	]
 }
