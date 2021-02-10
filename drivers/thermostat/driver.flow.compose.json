@@ -724,6 +724,18 @@
 			]
 		},
 		{
+			"id": "set_smart",
+			"title": {
+				"en": "Zone enabled until Smart Schedule changes",
+				"nl": "Zone ingeschakeld tot het Slimme Schema verandert"
+			},
+			"hint": {
+				"en": "This card enables this zone until Smart Schedule changes and takes control.",
+				"nl": "Dit kaartje schakelt deze zone in totdat het Slimme Schema verandert en de controle overneemt."
+			},
+			"$filter": "capabilities=target_onoff"
+		},
+		{
 			"id": "set_on_until_smart",
 			"title": {
 				"en": "Zone enabled until Smart Schedule changes",
