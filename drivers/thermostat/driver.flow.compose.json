@@ -770,6 +770,18 @@
 			]
 		},
 		{
+			"id": "set_off_until_smart",
+			"title": {
+				"en": "Disable zone until smart mode is enabled",
+				"nl": "Schakel zone uit totdat smart mode is ingeschakeld"
+			},
+			"hint": {
+				"en": "This card disables this zone until the Smart Schedule takes control.",
+				"nl": "Dit kaartje schakelt deze zone uit totdat het Slimme Schema de controle overneemt."
+			},
+			"$filter": "capabilities=smart_heating"
+		},
+		{
 			"id": "thermostat_set_operation_mode",
 			"title": {
 				"en": "Set mode",
