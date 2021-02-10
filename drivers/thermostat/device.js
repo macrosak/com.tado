@@ -468,11 +468,6 @@ class TadoDeviceThermostat extends TadoDevice {
     return this.setThermMode({ mode: value });
   }
 
-  // This function breaks the app.
-  // async onFlowActionSetSmart() {
-  //   return this.oAuth2Client.unsetOverlay(this._homeId, this._zoneId);
-  // }
-
   async onFlowActionSetManual(state, args) {
     let tCelsius = Number(args.temperature.celsius);
 
@@ -529,27 +524,18 @@ class TadoDeviceThermostat extends TadoDevice {
   }
 
   async onFlowActionSetSmartSchedule(state, args) {
-    let tCelsius = Number(args.temperature.celsius);
-    let objSetting = {
-      type: 'MANUAL',
-      setting: {
-        type: this._type,
-        power: state,
-        temperature: { celsius: tCelsius },
-      },
-      termination: {
-        type: 'SCHEDULE',
-      },
-    };
-    // - Off Until next Smart Schedule change
-    return this.oAuth2Client.setOverlay(this._homeId, this._zoneId, objSetting);
+    if (!this.getCapabilityValue('smart_heating')) { // smart_heating false -> true
+      return this.oAuth2Client.unsetOverlay(this._homeId, this._zoneId).then(() => {
+        return this.getState();
+      });
+    } // smart_heating was true already
+    return this.getState();
   }
 
   async setThermMode({ mode }) {
     this.oAuth2Client.getState(this._homeId, this._zoneId)
       .then(state => {
         this.setAvailable();
-        console.log(state);
         let args = {
           temperature: {
             celsius: 20,
