@@ -1,7 +1,9 @@
 {
 	"type": "boolean",
 	"title": {
-		"en": "Aan"
+		"en": "On",
+		"nl": "Aan",
+		"de": "An"
 	},
 	"getable": true,
 	"setable": true

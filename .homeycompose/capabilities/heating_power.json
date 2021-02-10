@@ -2,7 +2,8 @@
 	"type": "number",
 	"title": {
 		"en": "Heating capacity",
-		"nl": "Verwarming capaciteit"
+		"nl": "Verwarming capaciteit",
+		"de": "Heizkapazität"
 	},
 	"getable": true,
 	"setable": false,

@@ -2,7 +2,8 @@
 	"type": "string",
 	"title": {
 		"en": "Battery",
-		"nl": "Batterij"
+		"nl": "Batterij",
+		"de": "Akku"
 	},
 	"getable": true,
 	"setable": false

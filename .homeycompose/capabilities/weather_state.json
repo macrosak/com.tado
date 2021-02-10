@@ -2,7 +2,8 @@
 	"type": "string",
 	"title": {
 		"en": "Weather",
-		"nl": "Weer"
+		"nl": "Weer",
+		"de": "Wetter"
 	},
 	"getable": true,
 	"setable": false

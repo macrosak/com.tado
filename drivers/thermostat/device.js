@@ -14,7 +14,7 @@ class TadoDeviceThermostat extends TadoDevice {
 
     this.registerCapabilityListener('target_temperature', this._onCapabilityTargetTemperature.bind(this));
     this.registerCapabilityListener('target_onoff', this._onCapabilityTargetOnOff.bind(this));
-    // this.registerCapabilityListener('tado_smart', this._onCapabilityTadoAuto.bind(this));
+    this.registerCapabilityListener('tado_smart', this._onCapabilityTadoAuto.bind(this));
 
     this._flowTriggerTargetOnOff = new Homey.FlowCardTriggerDevice('target_onoff').register();
     this._flowTriggerHumidity = new Homey.FlowCardTriggerDevice('humidity').register();

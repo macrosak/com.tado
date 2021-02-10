@@ -12,27 +12,32 @@
 		  "id": "SCHEDULE",
 		  "title": {
 			"en": "Schedule",
-			"nl": "Programma"
+			"nl": "Programma",
+			"de": "Zeitplan"
 		  }
 		},
 		{
 		  "id": "MANUAL",
 		  "title": {
 			"en": "Manual",
-			"nl": "Handmatig"
+			"nl": "Handmatig",
+			"de": "Manueller Betrieb"
 		  }
 		},
 		{
 		  "id": "UNTIL_CHANGE",
 		  "title": {
-			"en": "Untill Change"
+			"en": "Until Change",
+			"nl": "Tot Verandering",
+			"de": "Bis zur Veränderung"
 		  }
 		},
 		{
 		  "id": "OFF",
 		  "title": {
 			"en": "Off",
-			"nl": "Uit"
+			"nl": "Uit",
+			"de": "Aus"
 		  }
 		}
 	  ]

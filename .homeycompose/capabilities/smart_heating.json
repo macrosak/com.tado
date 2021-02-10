@@ -2,7 +2,8 @@
 	"type": "boolean",
 	"title": {
 		"en": "Smart Schedule",
-		"nl": "Slimme Schema"
+		"nl": "Slimme Schema",
+		"de": "Intelligenter Zeitplan"
 	},
 	"getable": true,
 	"setable": true

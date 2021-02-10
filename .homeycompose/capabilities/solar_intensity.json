@@ -2,7 +2,8 @@
 	"type": "number",
 	"title": {
 		"en": "Solar intensity",
-		"nl": "Zonne-intensiteit"
+		"nl": "Zonne-intensiteit",
+		"de": "Sonnenintensität"
 	},
 	"getable": true,
 	"setable": false,

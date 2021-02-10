@@ -2,7 +2,8 @@
 	"type": "boolean",
 	"title": {
 		"en": "Open window detection",
-		"nl": "Open raam detectie"
+		"nl": "Open raam detectie",
+		"de": "Offenes-Fenster-Erkennung"
 	},
 	"getable": true,
 	"setable": false

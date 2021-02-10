@@ -2,7 +2,8 @@
 	"type": "string",
 	"title": {
 		"en": "Mode",
-		"nl": "Modus"
+		"nl": "Modus",
+		"de": "Modus"
 	},
 	"getable": true,
 	"setable": false

@@ -1,7 +1,9 @@
 {
 	"type": "boolean",
 	"title": {
-		"en": "identify device without cooling"
+		"en": "identify device without cooling",
+		"nl": "Identificeer apparaat zonder koeling",
+		"de": "Gerät ohne Kühlung identifizieren"
 	},
 	"getable": true,
 	"setable": true
