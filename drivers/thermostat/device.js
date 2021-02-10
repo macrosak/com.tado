@@ -465,21 +465,17 @@ class TadoDeviceThermostat extends TadoDevice {
   }
 
   async setThermMode({ mode }) {
-    switch (overlayType) {
-      case 'schedule':
+    switch (mode) {
+      case 'SCHEDULE':
         return this.onFlowActionSetOffSmartSchedule();
-      case 'manual':
+      case 'MANUAL':
         return this.onFlowActionSetOff();
         // case 'timer':
-      case 'untill-change':
+      case 'UNTIL_CHANGE':
         return this.onFlowActionSetOffUntilSmart();
       default:
 			// do nothing
     }
-    return this.oAuth2Client.setThermMode({
-      mode,
-      homeId: this.homeId,
-    });
   }
 
   async onFlowActionSetSmart() {
