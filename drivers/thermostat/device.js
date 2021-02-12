@@ -575,11 +575,6 @@ class TadoDeviceThermostat extends TadoDevice {
           }
 
           args.temperature = null;
-          // var	tadoOverlaySetting = {
-          //   type: this._type,
-          //   power: xPower,
-          //   temperature: null,
-          // };
         }
 
       default:
@@ -649,47 +644,6 @@ class TadoDeviceThermostat extends TadoDevice {
 
   async onFlowActionTemperatureUntilTimer(args) {
     return this.onFlowActionSetUntilTimer('ON', args);
-    // const tCelsius = Number(args.temperature.celsius);
-
-    // switch (this._type) {
-    //   case 'HOT_WATER':
-    //     if (this._zoneCapabilities.canSetTemperature) {
-    //       var	tadoOverlaySetting = {
-    //         type: this._type,
-    //         power: 'ON',
-    //         temperature: { celsius: tCelsius },
-    //       };
-    //     } else if (tCelsius === 0) {
-    //       var	tadoOverlaySetting = {
-    //         type: this._type,
-    //         power: 'OFF',
-    //       };
-    //     } else {
-    //       var	tadoOverlaySetting = {
-    //         type: this._type,
-    //         power: 'ON',
-    //         temperature: null,
-    //       };
-    //     }
-    //     break;
-
-    //   case 'HEATING':
-    //     var	tadoOverlaySetting = {
-    //       type: this._type,
-    //       power: 'ON',
-    //       temperature: { celsius: tCelsius },
-    //     };
-    //     break;
-    // }
-
-    // return this.oAuth2Client.setOverlay(this._homeId, this._zoneId, {
-    //   type: 'MANUAL',
-    //   setting: tadoOverlaySetting,
-    //   termination: {
-    //     type: 'TIMER',
-    //     durationInSeconds: Number((args.timer_off).substr(0, 2)) * 3600 + Number((args.timer_off).substr(3, 2)) * 60,
-    //   },
-    // });
   }
 
   async onFlowActionTemperatureAircoUntilTimer(args) {
@@ -710,45 +664,6 @@ class TadoDeviceThermostat extends TadoDevice {
 
   async onFlowActionTemperatureUntilSmart(args) {
     return this.onFlowActionSetUntilSmart('ON', args);
-
-    // const tCelsius = Number(args.temperature.celsius);
-
-    // switch (this._type) {
-    //   case 'HOT_WATER':
-    //     if (this._zoneCapabilities.canSetTemperature) {
-    //       var	tadoOverlaySetting = {
-    //         type: this._type,
-    //         power: 'ON',
-    //         temperature: { celsius: tCelsius },
-    //       };
-    //     } else { // has no thermostat. on/off only
-    //       if (tCelsius === 0) {
-    //         var xPower = 'OFF';
-    //       } else {
-    //         var xPower = 'ON';
-    //       }
-    //       var	tadoOverlaySetting = {
-    //         type: this._type,
-    //         power: xPower,
-    //         temperature: null,
-    //       };
-    //     }
-    //     break;
-
-    //   case 'HEATING':
-    //     var	tadoOverlaySetting = {
-    //       type: this._type,
-    //       power: 'ON',
-    //       temperature: { celsius: tCelsius },
-    //     };
-    //     break;
-    // }
-
-    // return this.oAuth2Client.setOverlay(this._homeId, this._zoneId, {
-    //   type: 'MANUAL',
-    //   setting: tadoOverlaySetting,
-    //   termination: { type: 'TADO_MODE' },
-    // });
   }
 
   async onFlowActionTemperatureAircoUntilSmart(args) {
@@ -772,46 +687,6 @@ class TadoDeviceThermostat extends TadoDevice {
     };
 
     return this.onFlowActionSetManual('ON', args);
-
-    // switch (this._type) {
-    //   case 'AIR_CONDITIONING':
-    //     var modeNow = this.getCapabilityValue('airco_mode').toUpperCase();
-    //     if (modeNow.indexOf(' ') > 0) {
-    //       modeNow = modeNow.substr(0, modeNow.indexOf(' '));
-    //     }
-    //     if (modeNow !== 'HEAT') {
-    //       modeNow = 'COOL';
-    //     }
-    //     var objSetting = {
-    //       type: this._type,
-    //       power: 'ON',
-    //       mode: modeNow,
-    //       temperature: {
-    //         celsius: value,
-    //       },
-    //     };
-    //     break;
-
-    //   case 'HOT_WATER':
-    //   case 'HEATING':
-    //     var objSetting = {
-    //       type: this._type,
-    //       power: 'ON',
-    //       temperature: {
-    //         celsius: value,
-    //       },
-    //     };
-    //     break;
-    // }
-
-    // return this.oAuth2Client.setOverlay(this._homeId, this._zoneId, {
-    //   setting: objSetting,
-    //   termination: {
-    //     type: 'MANUAL',
-    //   },
-    // }).then(() => {
-    //   return this.getState();
-    // });
   }
 
   async _onCapabilityTargetOnOff(value) {
@@ -822,27 +697,6 @@ class TadoDeviceThermostat extends TadoDevice {
     }
 
     return this.onFlowActionSetManual(state, {});
-
-    // if (value) {
-    //   var xPower = 'ON';
-    // } else {
-    //   var xPower = 'OFF';
-    // }
-
-    // const objOverlay = {
-    //   setting: {
-    //     type: this._type,
-    //     power: xPower,
-    //     temperature: { celsius: 20 },
-    //   },
-    //   termination: {
-    //     type: 'MANUAL',
-    //   },
-    // };
-
-    // return this.oAuth2Client.setOverlay(this._homeId, this._zoneId, objOverlay).then(() => {
-    //   return this.getState();
-    // });
   }
 
   async _onCapabilityTadoAuto(value) {

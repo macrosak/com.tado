@@ -14,11 +14,11 @@ class TadoDriverThermostat extends TadoDriver {
       .register()
       .registerRunListener(async (args, state) => {
         if (args.temperature_1 < args.temperature_2) {
-          var val1 = args.temperature_1; var
-            val2 = args.temperature_2;
+          var val1 = args.temperature_1; 
+          var val2 = args.temperature_2;
         } else {
-          var val1 = args.temperature_2; var
-            val2 = args.temperature_1;
+          var val1 = args.temperature_2; 
+          var val2 = args.temperature_1;
         }
         return ((args.device.getCapabilityValue('target_temperature') >= val1)
 						&& (args.device.getCapabilityValue('target_temperature') <= val2));
@@ -99,11 +99,11 @@ class TadoDriverThermostat extends TadoDriver {
       .register()
       .registerRunListener(async (args, state) => {
         if (args.temperature_1 < args.temperature_2) {
-          var val1 = args.temperature_1; var
-            val2 = args.temperature_2;
+          var val1 = args.temperature_1;
+          var val2 = args.temperature_2;
         } else {
-          var val1 = args.temperature_2; var
-            val2 = args.temperature_1;
+          var val1 = args.temperature_2;
+          var val2 = args.temperature_1;
         }
         return ((args.device.getCapabilityValue('measure_temperature.outside') >= val1)
 						&& (args.device.getCapabilityValue('measure_temperature.outside') <= val2));
@@ -113,11 +113,11 @@ class TadoDriverThermostat extends TadoDriver {
       .register()
       .registerRunListener(async (args, state) => {
         if (args.intensity_1 < args.intensity_2) {
-          var val1 = args.intensity_1; var
-            val2 = args.intensity_2;
+          var val1 = args.intensity_1;
+          var val2 = args.intensity_2;
         } else {
-          var val1 = args.intensity_2; var
-            val2 = args.intensity_1;
+          var val1 = args.intensity_2;
+          var val2 = args.intensity_1;
         }
         return ((args.device.getCapabilityValue('solar_intensity') >= val1)
 						&& (args.device.getCapabilityValue('solar_intensity') <= val2));
@@ -132,10 +132,6 @@ class TadoDriverThermostat extends TadoDriver {
       .registerAutocompleteListener(async (query, args) => {
         return tadoSub.getAutocompleteWeatherCondition(args);
       });
-
-    // new Homey.FlowCardAction('set_smart')
-    //   .register()
-    //   .registerRunListener(args => args.device.onFlowActionSetSmart());
 
     new Homey.FlowCardAction('set_on')
       .register()
