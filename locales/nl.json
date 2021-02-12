@@ -49,5 +49,27 @@
   "relative": "relatief",
   "Distance": "Afstand",
   "from": "van",
-  "Home Area": "Woongebied"
+  "Home Area": "Woongebied",
+
+  "settings" : {
+    "title" : "Tado Instellingen",
+    "thermostat" : "Thermostaat instellingen",
+    "hotwater" : "Warm water instellingen",
+    "min-temp" : {
+        "label" : "De standaard thermostaat uit temperatuur"
+    },
+    "default-temp" : {
+      "label" : "De standaad thermostaat aan temperatuur"
+    },
+    "hotwater-temp" : {
+      "label" : "De standaard warm water temperatuur"
+    },
+    "save" : {
+        "label" : "Opslaan"
+    },
+    "success" : "De instellingen zijn opgeslagen",
+    "error" : {
+        "threshold" : "De min en max waarden voor `__capability__` zijn niet geldig."
+    }
+  }
 }
