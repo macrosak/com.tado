@@ -49,5 +49,27 @@
   "relative": "relative",
   "Distance": "Distance",
   "from": "from",
-  "Home Area": "Home Area"
+  "Home Area": "Home Area",
+
+  "settings" : {
+    "title" : "Tado Settings",
+    "thermostat" : "Thermostat settings",
+    "hotwater" : "Hot water settings",
+    "min-temp" : {
+        "label" : "The default thermostat off temperature"
+    },
+    "default-temp" : {
+      "label" : "The default thermostat on temperature"
+    },
+    "hotwater-temp" : {
+      "label" : "The default hot water temperature"
+    },
+    "save" : {
+        "label" : "Save"
+    },
+    "success" : "The settings has been saved",
+    "error" : {
+        "threshold" : "The min and max threshold for `__capability__` is not a valid."
+    }
+  }
 }

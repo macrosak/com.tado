@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+<head>
+    <script type="text/javascript" src="/homey.js" data-origin="settings"></script>
+    <style>
+        #notice {
+            color: green;
+        }
+        .note {
+            margin: 0 0 1em 0;
+            display: inline-block;
+        }
+        .setting-row{
+            width: 100%;
+        }
+        #updateInterval{
+            width:55px;
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h1 data-i18n="settings.title"></h1>
+
+<fieldset>
+    <legend>
+        <p data-i18n="settings.thermostat"></p>
+    </legend>
+
+    <table class="setting-row">
+        <tr>
+            <td>
+                <label for="minTemp">
+                    <p data-i18n="settings.min-temp.label"></p>
+                </label>
+            </td>
+            <td>
+                <input id="minTemp" class="left" type="number" step=1 min=5 max=60/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="defaultTemp">
+                    <p data-i18n="settings.default-temp.label"></p>
+                </label>
+            </td>
+            <td>
+                <input id="defaultTemp" class="left" type="number" step=1 min=5 max=60/>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</fieldset>
+
+<fieldset>
+    <legend>
+        <p data-i18n="settings.hotwater"></p>
+    </legend>
+
+    <table class="setting-row">
+        <tr>
+            <td>
+                <label for="hotwaterTemp">
+                    <p data-i18n="settings.hotwater-temp.label"></p>
+                </label>
+            </td>
+            <td>
+                <input id="hotwaterTemp" class="left" type="number" step=1 min=30 max=80/>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</fieldset>
+
+<div class="field row">
+    <button id="save" class="right"><p data-i18n="settings.save.label"></p></button>
+</div>
+
+<script type="text/javascript">
+
+    function onHomeyReady(Homey) {
+
+        Homey.ready();
+
+        let minTempElement = document.getElementById('minTemp');
+        Homey.get('minTemp', function (err, minTemp) {
+            if (err) return Homey.alert(err);
+            minTempElement.value = minTemp;
+        });
+        
+        let defaultTempElement = document.getElementById('defaultTemp');
+        Homey.get('defaultTemp', function (err, defaultTemp) {
+            if (err) return Homey.alert(err);
+            defaultTempElement.value = defaultTemp;
+        });
+
+        let hotwaterTempElement = document.getElementById('hotwaterTemp');
+        Homey.get('hotwaterTemp', function (err, hotwaterTemp) {
+            if (err) return Homey.alert(err);
+            hotwaterTempElement.value = hotwaterTemp;
+        });
+
+        let saveElement = document.getElementById('save');
+        saveElement.addEventListener('click', function (e) {
+            Homey.set('minTemp', minTempElement.value, function (err) {
+                if (err) return Homey.alert(err);
+            });
+
+            Homey.set('defaultTemp', defaultTempElement.value, function (err) {
+                if (err) return Homey.alert(err);
+            });
+
+            Homey.set('hotwaterTemp', hotwaterTempElement.value, function (err) {
+                if (err) return Homey.alert(err);
+            });
+
+            Homey.alert(__("settings.success"));
+        });
+    }
+</script>
+
+</body>
+</html>

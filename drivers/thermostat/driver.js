@@ -169,6 +169,10 @@ class TadoDriverThermostat extends TadoDriver {
         return tadoSub.getAutocompleteTemperature(args);
       });
 
+    new Homey.FlowCardAction('thermostat_set_operation_mode')
+      .register()
+      .registerRunListener(args => args.device.setThermMode(args));
+
     const _flowActionAircoUntilTimer = new Homey.FlowCardAction('temperature_airco_until_timer')
       .register()
       .registerRunListener(args => args.device.onFlowActionTemperatureAircoUntilTimer(args));

@@ -222,8 +222,8 @@ class TadoDeviceThermostat extends TadoDevice {
 
       if (state.setting.power == 'OFF') { // set to OFF
         switch (state.setting.type) {
-          case 'HEATING': value = 5; break;
-          case 'HOT_WATER': value = 30; break;
+          case 'HEATING': value = this._getMinTemp(); break;
+          case 'HOT_WATER': value = this._getHotwaterTemp(); break;
         }
       } else { // set to temperature
         value = Math.round(10 * state.setting.temperature.celsius) / 10;
@@ -448,16 +448,20 @@ class TadoDeviceThermostat extends TadoDevice {
   }
 
   async onCapabilityOperationMode(value) {
-    return this.setThermMode({ mode: value });
+    const args = {
+      mode: value,
+    };
+
+    return this.setThermMode(args);
   }
 
   async onFlowActionSetManual(state, args) {
     const tCelsius = Number(args.temperature.celsius);
 
-    let objSetting = {
+    const objSetting = {
       setting: {
         type: this._type,
-        power: state
+        power: state,
       },
       termination: {
         type: 'MANUAL',
@@ -469,9 +473,15 @@ class TadoDeviceThermostat extends TadoDevice {
 
       if (typeof args.temperature.celsius === 'number') {
         objSetting.setting.temperature = { celsius: args.temperature.celsius };
-      }
-      else {
-        objSetting.setting.temperature = { celsius: 20 };
+      } else {
+        let defaultTemp = Homey.ManagerSettings.get('defaultTemp');
+
+        if (!defaultTemp) {
+          defaultTemp = this._getDefaultTemp();
+          Homey.ManagerSettings.set('defaultTemp', defaultTemp);
+        }
+
+        objSetting.setting.temperature = { celsius: defaultTemp };
       }
     }
 
@@ -487,7 +497,7 @@ class TadoDeviceThermostat extends TadoDevice {
         }
 
         objSetting.mode = modeNow;
-        
+
       default:
         // Do nothing.
     }
@@ -500,7 +510,7 @@ class TadoDeviceThermostat extends TadoDevice {
   async onFlowActionSetUntilTimer(state, args) {
     const tCelsius = Number(args.temperature.celsius);
 
-    let objSetting = { 
+    const objSetting = {
       type: 'MANUAL',
       setting: {
         type: this._type,
@@ -534,7 +544,7 @@ class TadoDeviceThermostat extends TadoDevice {
       default:
         // Do nothing.
     }
-    
+
     return this.oAuth2Client.setOverlay(this._homeId, this._zoneId, objSetting).then(() => {
       return this.getState();
     });
@@ -543,7 +553,7 @@ class TadoDeviceThermostat extends TadoDevice {
   async onFlowActionSetUntilSmart(state, args) {
     const tCelsius = Number(args.temperature.celsius);
 
-    let objSetting = {
+    const objSetting = {
       type: 'MANUAL',
       setting: {
         type: this._type,
@@ -571,7 +581,7 @@ class TadoDeviceThermostat extends TadoDevice {
           //   temperature: null,
           // };
         }
-        
+
       default:
         // Do nothing.
     }
@@ -591,19 +601,28 @@ class TadoDeviceThermostat extends TadoDevice {
     return this.getState();
   }
 
-  async setThermMode({ mode }) {
+  async setThermMode(args) {
+    let mode;
+
+    if (args.mode) {
+      mode = args.mode;
+    } else {
+      return this.error('Not able to set Thermostat Mode.');
+    }
+
     this.oAuth2Client.getState(this._homeId, this._zoneId)
       .then(state => {
+
         this.setAvailable();
-        let args = {
+        const args = {
           temperature: {
-            celsius: 20,
-          }
+            celsius: this._getDefaultTemp(),
+          },
         };
 
         if (state.setting.type === 'HEATING' && state.setting.temperature !== null) {
           args.temperature = {
-            celsius: state.setting.temperature.celsius
+            celsius: state.setting.temperature.celsius,
           };
         }
 
@@ -746,10 +765,10 @@ class TadoDeviceThermostat extends TadoDevice {
   }
 
   async _onCapabilityTargetTemperature(value) {
-    let args = {
+    const args = {
       temperature: {
         celsius: value,
-      }
+      },
     };
 
     return this.onFlowActionSetManual('ON', args);
@@ -799,7 +818,7 @@ class TadoDeviceThermostat extends TadoDevice {
     let state = 'OFF';
     // Check if state has been defined by the On/Off flow or manually set On/Off
     if (value) {
-       state = 'ON';
+      state = 'ON';
     }
 
     return this.onFlowActionSetManual(state, {});
@@ -833,6 +852,39 @@ class TadoDeviceThermostat extends TadoDevice {
       });
     } // smart_heating was true already
     return this.getState();
+  }
+
+  _getDefaultTemp() {
+    let defaultTemp = parseFloat(Homey.ManagerSettings.get('defaultTemp'));
+
+    if (!defaultTemp) {
+      defaultTemp = 20;
+      Homey.ManagerSettings.set('defaultTemp', defaultTemp);
+    }
+
+    return defaultTemp;
+  }
+
+  _getMinTemp() {
+    let minTemp = parseFloat(Homey.ManagerSettings.get('minTemp'));
+
+    if (!minTemp) {
+      minTemp = 5;
+      Homey.ManagerSettings.set('minTemp', minTemp);
+    }
+
+    return minTemp;
+  }
+
+  _getHotwaterTemp() {
+    let hotwaterTemp = parseFloat(Homey.ManagerSettings.get('hotwaterTemp'));
+
+    if (!hotwaterTemp) {
+      hotwaterTemp = 30;
+      Homey.ManagerSettings.set('hotwaterTemp', hotwaterTemp);
+    }
+
+    return hotwaterTemp;
   }
 
 }

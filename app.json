@@ -625,8 +625,8 @@
       {
         "id": "measure_temperature_outside_between",
         "title": {
-          "en": "Outside temp. !{{is between|is not between}}",
-          "nl": "Buitentemp. !{{ligt tussen|ligt niet tussen}}"
+          "en": "Outside temperature !{{is between|is not between}}",
+          "nl": "Buitentemperatuur !{{ligt tussen|ligt niet tussen}}"
         },
         "hint": {
           "en": "Use this card to determine whether or not the outside temperature is between two values. The specified values are also valid.",
@@ -907,6 +907,24 @@
               "en": "Temperature",
               "nl": "Temperatuur"
             }
+          }
+        ]
+      },
+      {
+        "id": "set_smart",
+        "title": {
+          "en": "Zone enabled until Smart Schedule changes",
+          "nl": "Zone ingeschakeld tot het Slimme Schema verandert"
+        },
+        "hint": {
+          "en": "This card enables this zone until Smart Schedule changes and takes control.",
+          "nl": "Dit kaartje schakelt deze zone in totdat het Slimme Schema verandert en de controle overneemt."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat&capabilities=target_onoff"
           }
         ]
       },

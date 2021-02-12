@@ -476,8 +476,8 @@
 		{
 			"id": "measure_temperature_outside_between",
 			"title": {
-				"en": "Outside temp. !{{is between|is not between}}",
-				"nl": "Buitentemp. !{{ligt tussen|ligt niet tussen}}"
+				"en": "Outside temperature !{{is between|is not between}}",
+				"nl": "Buitentemperatuur !{{ligt tussen|ligt niet tussen}}"
 			},
 			"hint": {
 				"en": "Use this card to determine whether or not the outside temperature is between two values. The specified values are also valid.",
